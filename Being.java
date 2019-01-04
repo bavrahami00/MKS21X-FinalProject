@@ -15,9 +15,7 @@ public abstract class Being implements HasLocation{
   public int getYPos() {
     return yPos;
   }
-  public abstract boolean isDead() {
-    return (health == 0);
-  }
+  public abstract boolean isDead();
   public abstract void attacked(Laser l) {
     health -= l.getDamage();
   }
