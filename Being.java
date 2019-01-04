@@ -1,11 +1,11 @@
 public abstract class Being implements HasLocation{
   private int health;
-  private Laser attack;
+  private int attack;
   private int xPos;
   private int yPos;
-  public Being(int h, Laser l, int x, int y) {
+  public Being(int h, int a, int x, int y) {
     health = h;
-    attack = l;
+    attack = a;
     xPos = x;
     yPos = y;
   }
@@ -15,8 +15,12 @@ public abstract class Being implements HasLocation{
   public int getYPos() {
     return yPos;
   }
-  public abstract boolean isDead();
-  public abstract void attack(Laser l);
+  public abstract boolean isDead() {
+    return (health == 0);
+  }
+  public abstract void attacked(Laser l) {
+    health -= l.getDamage();
+  }
   public abstract void move();
   public abstract Laser shoot();
 }
