@@ -1,4 +1,4 @@
-public abstract class Being {
+public abstract class Being implements HasLocation{
   private int health;
   private Laser attack;
   private int xPos;
@@ -8,6 +8,12 @@ public abstract class Being {
     attack = l;
     xPos = x;
     yPos = y;
+  }
+  public int getXPos() {
+    return xPos;
+  }
+  public int getYPos() {
+    return yPos;
   }
   public abstract boolean isDead();
   public abstract void attack(Laser l);
