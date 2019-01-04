@@ -26,4 +26,7 @@ public class Laser {
   public boolean didHit(HasLocation h) {
     return (xPos == h.getXPos() && yPos == h.getYPos());
   }
+  public int getDamage() {
+    return damage;
+  }
 }
