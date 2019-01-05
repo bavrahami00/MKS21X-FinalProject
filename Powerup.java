@@ -19,15 +19,15 @@ public class Powerup implements HasLocation {
   public int getYPos() {
     return yPos;
   }
-  public void implement() {
+  public void implement(User u) {
     if (effects[0]) {
-      User.changeHealth(heal);
+      u.changeHealth(heal);
     }
     if (effects[1]) {
-      User.changeLife(addLife);
+      u.changeLife(addLife);
     }
     if (effects[2]) {
-      User.changeDamage(addDamage);
+      u.changeDamage(addDamage);
     }
   }
 }
