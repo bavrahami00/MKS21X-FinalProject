@@ -32,8 +32,12 @@ public class SpaceInvaders{
 
     long tStart = System.currentTimeMillis();
 		long lastSecond = 0;
+    putString(0,0,terminal,"Press [esc] to exit");
 
 		boolean running = true;
+
+    int playerx = 0;
+    int playery = 0;
 
     while(running){
       //lots of stuff to go here
@@ -45,7 +49,19 @@ public class SpaceInvaders{
           System.exit(0);
         }
       }
-      putString(0,0,terminal, "Press [esc] to exit");
+        if(key.getKind() == Key.Kind.ArrowRight){
+          terminal.moveCursor(x,y);
+          terminal.putCharacter(' ');
+          if(x == 1 //CHANGE){
+          x++;
+        }}
+        if(key.getKind() == Key.Kind.ArrowLeft){
+          terminal.moveCursor(x,y);
+          terminal.putCharacter(' ');
+          if(x > 0){
+          x--
+        }}
+
     }
 
   }
