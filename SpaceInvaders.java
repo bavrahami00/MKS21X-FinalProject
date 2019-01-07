@@ -52,18 +52,21 @@ public class SpaceInvaders{
         if(key.getKind() == Key.Kind.ArrowRight){
           terminal.moveCursor(x,y);
           terminal.putCharacter(' ');
-          if(x == 1 //CHANGE){
+          if(x == 1) //CHANGE)
+          {
           x++;
-        }}
+        }
         if(key.getKind() == Key.Kind.ArrowLeft){
           terminal.moveCursor(x,y);
           terminal.putCharacter(' ');
           if(x > 0){
           x--
-        }}
+        }
+      }
 
     }
-
+    long tEnd = System.currentTimeMillis();
+    long millis = tEnd - tStart;
   }
 
 }
