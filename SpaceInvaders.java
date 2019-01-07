@@ -25,8 +25,14 @@ public class SpaceInvaders{
 		boolean running = true;
 
     while(running){
-
       //lots of stuff to go here
+      Key key = terminal.readInput();
+      if (key != null) {
+        if (key.getKind() == Key.Kind.Escape) {
+          terminal.exitPrivateMode();
+          System.exit(0);
+        }
+      }
 
     }
 
