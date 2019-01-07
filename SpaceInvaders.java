@@ -22,6 +22,9 @@ public class SpaceInvaders{
 		TerminalSize size = terminal.getTerminalSize();
 		terminal.setCursorVisible(false);
 
+    long tStart = System.currentTimeMillis();
+		long lastSecond = 0;
+
 		boolean running = true;
 
     while(running){
@@ -33,7 +36,8 @@ public class SpaceInvaders{
           System.exit(0);
         }
       }
-
+      long tEnd = System.currentTimeMillis();
+      long millis = tEnd - tStart;
     }
 
   }
