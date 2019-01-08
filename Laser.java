@@ -1,4 +1,4 @@
-public class Laser extends HasLocation{
+public class Laser implements HasLocation{
   private int damage;
   private int xPos;
   private int yPos;
