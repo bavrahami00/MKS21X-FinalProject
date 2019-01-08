@@ -22,6 +22,13 @@ public class SpaceInvaders{
 		}
 	}
 
+  private static void clearLine(int line, Terminal t, TerminalSize size){
+    for(int i = 0; i < size.getColumns(); i++){
+      t.moveCursor(i,line);
+      t.putCharacter(' ');
+    }
+  }
+
   public static void main(String[] args){
 
     Terminal terminal = TerminalFacade.createTextTerminal();
@@ -37,10 +44,28 @@ public class SpaceInvaders{
 		boolean running = true;
 
     int playerx = 0;
-    int playery = 0;
+    int playery = 40;
 
     while(running){
-      //lots of stuff to go here
+
+      terminal.moveCursor(playerx, playery);
+      terminal.putCharacter('<');
+      terminal.moveCursor(playerx + 1, playery);
+      terminal.putCharacter('=');
+      terminal.moveCursor(playerx + 2, playery);
+      terminal.putCharacter('=');
+      terminal.moveCursor(playerx + 3, playery);
+      terminal.putCharacter('=');
+      terminal.moveCursor(playerx + 4, playery);
+      terminal.putCharacter('=');
+      terminal.moveCursor(playerx + 5, playery);
+      terminal.putCharacter('=');
+      terminal.moveCursor(playerx + 6, playery);
+      terminal.putCharacter('>');
+      terminal.moveCursor(playerx + 3, playery - 2);
+      terminal.putCharacter('^');
+
+
       Key key = terminal.readInput();
 
       if (key != null) {
@@ -48,19 +73,21 @@ public class SpaceInvaders{
           terminal.exitPrivateMode();
           System.exit(0);
         }
-      }
         if(key.getKind() == Key.Kind.ArrowRight){
-          terminal.moveCursor(x,y);
-          terminal.putCharacter(' ');
-          if(x == 1) //CHANGE)
+          terminal.moveCursor(playerx,playery);
+          clearLine(40,terminal,size);
+          clearLine(playery - 2,terminal,size);
+          if(playerx + 7 < size.getColumns()) //CHANGE)
           {
-          x++;
+          playerx++;
         }
+      }
         if(key.getKind() == Key.Kind.ArrowLeft){
-          terminal.moveCursor(x,y);
-          terminal.putCharacter(' ');
-          if(x > 0){
-          x--
+          terminal.moveCursor(playerx,playery);
+          clearLine(40,terminal,size);
+          clearLine(playery - 2,terminal,size);
+          if(playerx > 0){
+          playerx--;
         }
       }
 
@@ -69,4 +96,5 @@ public class SpaceInvaders{
     long millis = tEnd - tStart;
   }
 
+}
 }
