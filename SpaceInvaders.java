@@ -59,7 +59,7 @@ public class SpaceInvaders{
         if(key.getKind() == Key.Kind.ArrowLeft){
           user.move(3);
           user.move(3);
-          terminal.moveCursor(x,y);
+          terminal.moveCursor(user.getXPos(),user.getYPos());
           terminal.putCharacter('b');
           if (x >= 2) {
             x -= 2;
