@@ -1,4 +1,4 @@
-public class Laser {
+public class Laser extends HasLocation{
   private int damage;
   private int xPos;
   private int yPos;
@@ -8,6 +8,12 @@ public class Laser {
     xPos = x;
     yPos = y;
     source = s;
+  }
+  public int getXPos() {
+    return xPos;
+  }
+  public int getYPos() {
+    return yPos;
   }
   public void move(int dir) {
     if (dir == 0) {
