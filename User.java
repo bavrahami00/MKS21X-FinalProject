@@ -12,6 +12,20 @@ public class User extends Being {
     return (lives == 0 && health == 0);
   }
   public void move() {}
+  public void move(int dir) {
+    if (dir == 0) {
+      yPos--;
+    }
+    if (dir == 1) {
+      xPos++;
+    }
+    if (dir == 2) {
+      yPos++;
+    }
+    if (dir == 3) {
+      xPos--;
+    }
+  }
   public Laser shoot() {
     Laser l = new Laser(attack,xPos,yPos,this);
     return l;
