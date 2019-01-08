@@ -36,8 +36,9 @@ public class SpaceInvaders{
 
 		boolean running = true;
 
-    int x = 50;
-    int y = 50;
+    int x = 25;
+    int y = 25;
+    User user = new User(1,1,x,y,1);
 
     while(running){
       //lots of stuff to go here
@@ -49,32 +50,31 @@ public class SpaceInvaders{
           System.exit(0);
         }
         if(key.getKind() == Key.Kind.ArrowRight){
-          terminal.moveCursor(x,y);
-          terminal.putCharacter('A');
+          user.move(1);
+          user.move(1);
+          terminal.moveCursor(user.getXPos(),user.getYPos());
+          terminal.putCharacter('a');
           x += 2;
         }
         if(key.getKind() == Key.Kind.ArrowLeft){
+          user.move(3);
+          user.move(3);
           terminal.moveCursor(x,y);
-          terminal.putCharacter('B');
+          terminal.putCharacter('b');
           if (x >= 2) {
             x -= 2;
           }
         }
         if(key.getKind() == Key.Kind.ArrowUp){
-          terminal.moveCursor(x,y);
-          terminal.putCharacter('C');
-          if (y >= 1) {
-            y--;
-          }
-        }
-        if(key.getKind() == Key.Kind.ArrowDown){
-          terminal.moveCursor(x,y);
-          terminal.putCharacter('D');
-          y++;
+          Laser l = user.shoot();
+          //l.move(0);
+          terminal.moveCursor(l.getXPos(), l.getYPos());
+          terminal.putCharacter('|');
         }
       }
       long tEnd = System.currentTimeMillis();
       long millis = tEnd - tStart;
+      SpaceInvaders.putString(30,0,terminal,""+millis/1000);
     }
   }
 }
