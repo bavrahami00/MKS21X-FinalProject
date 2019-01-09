@@ -67,13 +67,17 @@ public class SpaceInvaders{
         }
         if(key.getKind() == Key.Kind.ArrowUp){
           Laser l = user.shoot();
-          //l.move(0);
+          l.move(0);
           terminal.moveCursor(l.getXPos(), l.getYPos());
           terminal.putCharacter('|');
         }
       }
       long tEnd = System.currentTimeMillis();
       long millis = tEnd - tStart;
+      if (millis/1000 > lastSecond) {
+        lastSecond = millis/1000;
+
+      }
       SpaceInvaders.putString(30,0,terminal,""+millis/1000);
     }
   }
