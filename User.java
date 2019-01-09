@@ -22,10 +22,6 @@ public class User extends Being {
       setXPos(getXPos()-1);
     }
   }
-  public Laser shoot() {
-    Laser l = new Laser(getAttack(),getXPos(),getYPos(),this);
-    return l;
-  }
   public void changeLife(int num) {
     lives += num;
   }

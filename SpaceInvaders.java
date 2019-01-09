@@ -1,3 +1,4 @@
+import java.util.*;
 import com.googlecode.lanterna.terminal.Terminal.SGR;
 import com.googlecode.lanterna.TerminalFacade;
 import com.googlecode.lanterna.input.Key;
@@ -39,6 +40,7 @@ public class SpaceInvaders{
     int x = 25;
     int y = 25;
     User user = new User(1,1,x,y,1);
+    ArrayList<Integer> lasers = new ArrayList<Integer>();
 
     while(running){
       //lots of stuff to go here
@@ -66,17 +68,22 @@ public class SpaceInvaders{
           }
         }
         if(key.getKind() == Key.Kind.ArrowUp){
-          Laser l = user.shoot();
-          l.move(0);
-          terminal.moveCursor(l.getXPos(), l.getYPos());
-          terminal.putCharacter('|');
+          lasers.add(user.getXPos());
+          lasers.add(user.getYPos());
+          terminal.moveCursor(user.getXPos(), user.getYPos());
+          terminal.putCharacter('^');
         }
       }
       long tEnd = System.currentTimeMillis();
       long millis = tEnd - tStart;
       if (millis/1000 > lastSecond) {
         lastSecond = millis/1000;
-
+        for (int i = 0; i < lasers.size(); i+=2) {
+          terminal.moveCursor(lasers.get(i),lasers.get(i+1));
+          terminal.putCharacter(' ');
+          terminal.moveCursor(lasers.get(i),lasers.get(i+1)-1);
+          terminal.putCharacter('^');
+        }
       }
       SpaceInvaders.putString(30,0,terminal,""+millis/1000);
     }
