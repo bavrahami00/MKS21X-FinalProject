@@ -29,6 +29,7 @@ public class SpaceInvaders{
     }
   }
 
+
   public static void main(String[] args){
 
     Terminal terminal = TerminalFacade.createTextTerminal();
@@ -47,6 +48,13 @@ public class SpaceInvaders{
     int playery = 40;
 
     while(running){
+
+      for(int y = 30; y < 34; y++){
+      for(int i = 0; i < size.getColumns();i++){
+        if((i >= 5 && i <= 15) || (i >= 30 && i <= 40) || (i >= 55 && i <= 65) || (i >= 80 & i <= 90)){
+        terminal.moveCursor(i,y);
+        terminal.putCharacter('#');
+      }}}
 
       terminal.moveCursor(playerx, playery);
       terminal.putCharacter('<');
