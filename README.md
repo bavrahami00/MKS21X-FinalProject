@@ -4,3 +4,5 @@
 -Benjamin (1/4) ==> Created outlines of Being/Laser/Enemy/User/Powerup/HasLocation classes/interfaces that have all planned methods within (but may not work)
 
 -Derek (1/7) ==> Started working on character movement in SpaceInvaders class
+
+-Derek (1/9) ==> Drew barriers into the map
