@@ -9,8 +9,4 @@ public class Enemy extends Being {
     public boolean isDead() {
       return (health == 0);
     }
-  public Laser shoot() {
-    Laser l = new Laser(attack,xPos,yPos,this);
-    return l;
-  }
 }

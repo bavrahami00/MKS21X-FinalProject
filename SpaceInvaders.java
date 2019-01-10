@@ -1,3 +1,4 @@
+import java.util.*;
 import com.googlecode.lanterna.terminal.Terminal.SGR;
 import com.googlecode.lanterna.TerminalFacade;
 import com.googlecode.lanterna.input.Key;
@@ -23,8 +24,8 @@ public class SpaceInvaders{
 	}
 
   private static void clearLine(int line, Terminal t, TerminalSize size){
+    t.moveCursor(0,line);
     for(int i = 0; i < size.getColumns(); i++){
-      t.moveCursor(i,line);
       t.putCharacter(' ');
     }
   }
@@ -47,6 +48,7 @@ public class SpaceInvaders{
     int x = 25;
     int y = 25;
     User user = new User(1,1,x,y,1);
+    ArrayList<Integer> lasers = new ArrayList<Integer>();
 
     int playerx = 0;
     int playery = 40;
@@ -85,30 +87,30 @@ public class SpaceInvaders{
           terminal.exitPrivateMode();
           System.exit(0);
         }
-          if(key.getKind() == Key.Kind.ArrowUp){
-            Laser l = user.shoot();
-            //l.move(0);
-            terminal.moveCursor(l.getXPos(), l.getYPos());
-            terminal.putCharacter('|');
-          }
-          if(key.getKind() == Key.Kind.ArrowRight){
-          terminal.moveCursor(playerx,playery);
-          clearLine(40,terminal,size);
-          clearLine(playery - 2,terminal,size);
-          if(playerx + 7 < size.getColumns()) //CHANGE)
-          {
-          playerx++;
+        if(key.getKind() == Key.Kind.ArrowRight){
+          terminal.moveCursor(user.getXPos(),user.getYPos());
+          terminal.putCharacter(' ');
+          user.move(1);
+          terminal.moveCursor(user.getXPos(),user.getYPos());
+          terminal.putCharacter('-');
+          x++;
         }
       }
         if(key.getKind() == Key.Kind.ArrowLeft){
-          terminal.moveCursor(playerx,playery);
-          clearLine(40,terminal,size);
-          clearLine(playery - 2,terminal,size);
-          if(playerx > 0){
-          playerx--;
+          terminal.moveCursor(user.getXPos(),user.getYPos());
+          terminal.putCharacter(' ');
+          user.move(3);
+          terminal.moveCursor(user.getXPos(),user.getYPos());
+          terminal.putCharacter('-');
+          if (x >= 1) {
+            x--;
+          }
         }
-      }
-
+        if(key.getKind() == Key.Kind.ArrowUp){
+          lasers.add(user.getXPos());
+          lasers.add(user.getYPos());
+          terminal.moveCursor(user.getXPos(), user.getYPos());
+          terminal.putCharacter('^');
         }
       }
       terminal.moveCursor(playerx,playery);
@@ -123,6 +125,25 @@ public class SpaceInvaders{
 
       long tEnd = System.currentTimeMillis();
       long millis = tEnd - tStart;
+      if (millis/300 > lastSecond) {
+        lastSecond = millis/300;
+        for (int i = 0; i < lasers.size(); i+=2) {
+          terminal.moveCursor(lasers.get(i),lasers.get(i+1));
+          terminal.putCharacter(' ');
+          if (lasers.get(i+1) == 1) {
+            lasers.remove(i);
+            lasers.remove(i);
+            i -= 2;
+          }
+          else {
+            terminal.moveCursor(lasers.get(i),lasers.get(i+1)-1);
+            terminal.putCharacter('^');
+            lasers.set(i+1,lasers.get(i+1)-1);
+          }
+        }
+        terminal.moveCursor(user.getXPos(),user.getYPos());
+        terminal.putCharacter('-');
+      }
       SpaceInvaders.putString(30,0,terminal,""+millis/1000);
     }
   }
