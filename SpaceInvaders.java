@@ -23,8 +23,9 @@ public class SpaceInvaders{
 	}
 
   private static void clearLine(int line, Terminal t, TerminalSize size){
+    t.moveCursor(0,line);
     for(int i = 0; i < size.getColumns(); i++){
-      t.moveCursor(i,line);
+      //t.moveCursor(i,line);
       t.putCharacter(' ');
     }
   }
