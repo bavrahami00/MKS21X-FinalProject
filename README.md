@@ -12,3 +12,5 @@ classes in file
 terminal
 
 -Derek(1/9) ==> Drew Barriers
+
+-Derek(1/10) ==> Made Class for Barriers
