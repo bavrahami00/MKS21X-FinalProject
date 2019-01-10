@@ -22,6 +22,14 @@ public class SpaceInvaders{
 		}
 	}
 
+  private static void clearLine(int line, Terminal t, TerminalSize size){
+    for(int i = 0; i < size.getColumns(); i++){
+      t.moveCursor(i,line);
+      t.putCharacter(' ');
+    }
+  }
+
+
   public static void main(String[] args){
 
     Terminal terminal = TerminalFacade.createTextTerminal();
@@ -40,8 +48,36 @@ public class SpaceInvaders{
     int y = 25;
     User user = new User(1,1,x,y,1);
 
+    int playerx = 0;
+    int playery = 40;
+
     while(running){
-      //lots of stuff to go here
+
+      for(int p = 30; y < 34; y++){
+      for(int i = 0; i < size.getColumns();i++){
+        if((i >= 5 && i <= 15) || (i >= 30 && i <= 40) || (i >= 55 && i <= 65) || (i >= 80 & i <= 90)){
+        terminal.moveCursor(i,y);
+        terminal.putCharacter('#');
+      }}}
+
+      terminal.moveCursor(playerx, playery);
+      terminal.putCharacter('<');
+      terminal.moveCursor(playerx + 1, playery);
+      terminal.putCharacter('=');
+      terminal.moveCursor(playerx + 2, playery);
+      terminal.putCharacter('=');
+      terminal.moveCursor(playerx + 3, playery);
+      terminal.putCharacter('=');
+      terminal.moveCursor(playerx + 4, playery);
+      terminal.putCharacter('=');
+      terminal.moveCursor(playerx + 5, playery);
+      terminal.putCharacter('=');
+      terminal.moveCursor(playerx + 6, playery);
+      terminal.putCharacter('>');
+      terminal.moveCursor(playerx + 3, playery - 2);
+      terminal.putCharacter('^');
+
+
       Key key = terminal.readInput();
 
       if (key != null) {
@@ -56,6 +92,13 @@ public class SpaceInvaders{
           terminal.putCharacter('a');
           x += 2;
         }
+      }
+      terminal.moveCursor(playerx,playery);
+      clearLine(40,terminal,size);
+      clearLine(playery - 2,terminal,size);
+      if(playerx + 7 < size.getColumns()) //CHANGE)
+      {
+      playerx++;
         if(key.getKind() == Key.Kind.ArrowLeft){
           user.move(3);
           user.move(3);
@@ -72,9 +115,16 @@ public class SpaceInvaders{
           terminal.putCharacter('|');
         }
       }
+      terminal.moveCursor(playerx,playery);
+      clearLine(40,terminal,size);
+      clearLine(playery - 2,terminal,size);
+      if(playerx > 0){
+      playerx--;
+
       long tEnd = System.currentTimeMillis();
       long millis = tEnd - tStart;
       SpaceInvaders.putString(30,0,terminal,""+millis/1000);
     }
   }
+}
 }
