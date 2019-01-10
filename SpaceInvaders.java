@@ -52,17 +52,21 @@ public class SpaceInvaders{
           System.exit(0);
         }
         if(key.getKind() == Key.Kind.ArrowRight){
+          terminal.moveCursor(user.getXPos(),user.getYPos());
+          terminal.putCharacter(' ');
           user.move(1);
           user.move(1);
           terminal.moveCursor(user.getXPos(),user.getYPos());
-          terminal.putCharacter('a');
+          terminal.putCharacter('-');
           x += 2;
         }
         if(key.getKind() == Key.Kind.ArrowLeft){
+          terminal.moveCursor(user.getXPos(),user.getYPos());
+          terminal.putCharacter(' ');
           user.move(3);
           user.move(3);
           terminal.moveCursor(user.getXPos(),user.getYPos());
-          terminal.putCharacter('b');
+          terminal.putCharacter('-');
           if (x >= 2) {
             x -= 2;
           }
@@ -76,14 +80,24 @@ public class SpaceInvaders{
       }
       long tEnd = System.currentTimeMillis();
       long millis = tEnd - tStart;
-      if (millis/1000 > lastSecond) {
-        lastSecond = millis/1000;
+      if (millis/300 > lastSecond) {
+        lastSecond = millis/300;
         for (int i = 0; i < lasers.size(); i+=2) {
           terminal.moveCursor(lasers.get(i),lasers.get(i+1));
           terminal.putCharacter(' ');
-          terminal.moveCursor(lasers.get(i),lasers.get(i+1)-1);
-          terminal.putCharacter('^');
+          if (lasers.get(i+1) == 1) {
+            lasers.remove(i);
+            lasers.remove(i);
+            i -= 2;
+          }
+          else {
+            terminal.moveCursor(lasers.get(i),lasers.get(i+1)-1);
+            terminal.putCharacter('^');
+            lasers.set(i+1,lasers.get(i+1)-1);
+          }
         }
+        terminal.moveCursor(user.getXPos(),user.getYPos());
+        terminal.putCharacter('-');
       }
       SpaceInvaders.putString(30,0,terminal,""+millis/1000);
     }
