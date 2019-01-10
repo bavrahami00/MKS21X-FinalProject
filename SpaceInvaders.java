@@ -45,8 +45,8 @@ public class SpaceInvaders{
 
 		boolean running = true;
 
-    int x = 25;
-    int y = 25;
+    int x = 0;
+    int y = 40;
     User user = new User(1,1,x,y,1);
     ArrayList<Integer> lasers = new ArrayList<Integer>();
 
@@ -95,7 +95,6 @@ public class SpaceInvaders{
           terminal.putCharacter('-');
           x++;
         }
-      }
         if(key.getKind() == Key.Kind.ArrowLeft){
           terminal.moveCursor(user.getXPos(),user.getYPos());
           terminal.putCharacter(' ');
@@ -121,7 +120,8 @@ public class SpaceInvaders{
       clearLine(40,terminal,size);
       clearLine(playery - 2,terminal,size);
       if(playerx > 0){
-      playerx--;
+        playerx--;
+      }
 
       long tEnd = System.currentTimeMillis();
       long millis = tEnd - tStart;
