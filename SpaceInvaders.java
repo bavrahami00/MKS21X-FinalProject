@@ -85,36 +85,36 @@ public class SpaceInvaders{
           terminal.exitPrivateMode();
           System.exit(0);
         }
-        if(key.getKind() == Key.Kind.ArrowRight){
-          user.move(1);
-          user.move(1);
-          terminal.moveCursor(user.getXPos(),user.getYPos());
-          terminal.putCharacter('a');
-          x += 2;
+          if(key.getKind() == Key.Kind.ArrowUp){
+            Laser l = user.shoot();
+            //l.move(0);
+            terminal.moveCursor(l.getXPos(), l.getYPos());
+            terminal.putCharacter('|');
+          }
+          if(key.getKind() == Key.Kind.ArrowRight){
+          terminal.moveCursor(playerx,playery);
+          clearLine(40,terminal,size);
+          clearLine(playery - 2,terminal,size);
+          if(playerx + 7 < size.getColumns()) //CHANGE)
+          {
+          playerx++;
+        }
+      }
+        if(key.getKind() == Key.Kind.ArrowLeft){
+          terminal.moveCursor(playerx,playery);
+          clearLine(40,terminal,size);
+          clearLine(playery - 2,terminal,size);
+          if(playerx > 0){
+          playerx--;
+        }
+      }
+
         }
       }
       terminal.moveCursor(playerx,playery);
       clearLine(40,terminal,size);
       clearLine(playery - 2,terminal,size);
-      if(playerx + 7 < size.getColumns()) //CHANGE)
-      {
-      playerx++;
-        if(key.getKind() == Key.Kind.ArrowLeft){
-          user.move(3);
-          user.move(3);
-          terminal.moveCursor(user.getXPos(),user.getYPos());
-          terminal.putCharacter('b');
-          if (x >= 2) {
-            x -= 2;
-          }
-        }
-        if(key.getKind() == Key.Kind.ArrowUp){
-          Laser l = user.shoot();
-          //l.move(0);
-          terminal.moveCursor(l.getXPos(), l.getYPos());
-          terminal.putCharacter('|');
-        }
-      }
+
       terminal.moveCursor(playerx,playery);
       clearLine(40,terminal,size);
       clearLine(playery - 2,terminal,size);
@@ -126,5 +126,4 @@ public class SpaceInvaders{
       SpaceInvaders.putString(30,0,terminal,""+millis/1000);
     }
   }
-}
 }
