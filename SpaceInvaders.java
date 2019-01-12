@@ -48,8 +48,18 @@ public class SpaceInvaders{
     int y = 25;
     User user = new User(1,1,x,y,1);
     ArrayList<Integer> lasers = new ArrayList<Integer>(); //keeps track of laser coordinates in the form of <x1,y1,x2,y2...>
+    Barrier shields = new Barrier();
 
     putString(0,0,terminal,"Press [esc] to exit");
+
+    for(int p = 0; p < 40; p++){
+      for(int w = 0; w < 100; w++){
+        if(shields.barrierExists(w,p)){
+          terminal.moveCursor(w+1,p+1);
+          terminal.putCharacter('#');
+        }
+      }
+    }
 
     while(running){
 
@@ -89,6 +99,7 @@ public class SpaceInvaders{
       }
 
 
+
       long tEnd = System.currentTimeMillis();
       long millis = tEnd - tStart;
       if (millis/300 > lastSecond) {
@@ -96,7 +107,10 @@ public class SpaceInvaders{
         for (int i = 0; i < lasers.size(); i+=2) {
           terminal.moveCursor(lasers.get(i),lasers.get(i+1));
           terminal.putCharacter(' ');
-          if (lasers.get(i+1) == 1) {
+          if (lasers.get(i+1) == 1 || shields.barrierExists(lasers.get(i),lasers.get(i+1))) {
+            shields.destroy(lasers.get(i),lasers.get(i+1));
+            terminal.moveCursor(lasers.get(i),lasers.get(i+1));
+            terminal.putCharacter(' ');
             lasers.remove(i);
             lasers.remove(i);
             i -= 2;
