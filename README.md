@@ -12,3 +12,5 @@ classes in file
 terminal
 
 -Derek(1/9) ==> Drew Barriers
+
+-Derek (1/12) ==>Scrapped earlier barriers and redid them (with hitboxes)
