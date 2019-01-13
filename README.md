@@ -12,5 +12,6 @@ classes in file
 terminal
 
 -Derek(1/9) ==> Drew Barriers
+-Benjamin(1/9) ==> Made laser shoot and die at edge of screen
 
 -Derek (1/12) ==>Scrapped earlier barriers and redid them (with hitboxes)
