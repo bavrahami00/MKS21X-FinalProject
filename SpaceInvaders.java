@@ -45,7 +45,7 @@ public class SpaceInvaders{
     //other variables (change later)
 		boolean running = true;
     int x = 25;
-    int y = 25;
+    int y = 50;
     User user = new User(1,1,x,y,1);
     ArrayList<Integer> lasers = new ArrayList<Integer>(); //keeps track of laser coordinates in the form of <x1,y1,x2,y2...>
     Barrier shields = new Barrier();
