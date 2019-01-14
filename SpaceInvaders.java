@@ -33,12 +33,10 @@ public class SpaceInvaders{
   public static ArrayList<Enemy> enemyCreation() {
     ArrayList<Enemy> ans = new ArrayList<Enemy>();
     Enemy e;
-    for (int p = 0; p < 4; p++) {
-      for (int q = 0; q < 4; q++) {
-        for (int m = 5; m < 8; m++) {
-          e = new Enemy(1,1,30*p+q,m);
-          ans.add(e);
-        }
+    for (int p = 45; p < 56; p++) {
+      for (int m = 5; m < 8; m++) {
+        e = new Enemy(1,1,p,m);
+        ans.add(e);
       }
     }
     return ans;
@@ -60,6 +58,7 @@ public class SpaceInvaders{
     //timekeeping: Laser and enemy movement is dependent on this
     long tStart = System.currentTimeMillis();
 		long lastSecond = 0;
+    long lastesecond = 0;
 
     //other variables (change later)
 		boolean running = true;
@@ -150,6 +149,18 @@ public class SpaceInvaders{
         }
         terminal.moveCursor(user.getXPos(),user.getYPos());
         terminal.putCharacter('-');
+      }
+      if (millis/2000 > lastesecond) {
+        lastesecond = millis/2000;
+        for (int p = 0; p < enemies.size(); p++) {
+          terminal.moveCursor(enemies.get(p).getXPos(),enemies.get(p).getYPos());
+          terminal.putCharacter(' ');
+          enemies.get(p).setXPos(enemies.get(p).getXPos()+1);
+        }
+        for (int p = 0; p < enemies.size(); p++) {
+          terminal.moveCursor(enemies.get(p).getXPos(),enemies.get(p).getYPos());
+          terminal.putCharacter('E');
+        }
       }
       SpaceInvaders.putString(30,0,terminal,""+millis/1000);
     }
