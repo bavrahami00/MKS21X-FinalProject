@@ -31,6 +31,34 @@ public class SpaceInvaders{
       t.putCharacter(' ');
     }
   }
+  public static ArrayList<Enemy> enemyCreation() {
+    ArrayList<Enemy> ans = new ArrayList<Enemy>();
+    Enemy e1 = new Enemy(1,1,10,5);
+    ans.add(e1);
+    Enemy e2 = new Enemy(1,1,11,5);
+    ans.add(e2);
+    Enemy e3 = new Enemy(1,1,12,5);
+    ans.add(e3);
+    Enemy e4 = new Enemy(1,1,13,5);
+    ans.add(e4);
+    Enemy e5 = new Enemy(1,1,10,6);
+    ans.add(e5);
+    Enemy e6 = new Enemy(1,1,11,6);
+    ans.add(e6);
+    Enemy e7 = new Enemy(1,1,12,6);
+    ans.add(e7);
+    Enemy e8 = new Enemy(1,1,13,6);
+    ans.add(e8);
+    Enemy e9 = new Enemy(1,1,10,7);
+    ans.add(e9);
+    Enemy e10 = new Enemy(1,1,11,7);
+    ans.add(e10);
+    Enemy e11 = new Enemy(1,1,12,7);
+    ans.add(e11);
+    Enemy e12 = new Enemy(1,1,13,7);
+    ans.add(e12);
+    return ans;
+  }
 
   public static void main(String[] args){
     //sets up new private terminal that the game is going to run on
@@ -49,6 +77,7 @@ public class SpaceInvaders{
     User user = new User(1,1,x,y,1);
     ArrayList<Integer> lasers = new ArrayList<Integer>(); //keeps track of laser coordinates in the form of <x1,y1,x2,y2...>
     Barrier shields = new Barrier();
+    ArrayList<Enemy> enemies = SpaceInvaders.enemyCreation();
 
     putString(0,0,terminal,"Press [esc] to exit");
 
