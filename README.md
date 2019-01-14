@@ -17,3 +17,5 @@ terminal
 -Derek (1/12) ==> Scrapped earlier barriers and redid them (with hitboxes)
 
 -Benjamin (1/13) ==> Fixed barrier issues, made enemies
+
+-Derek(1/14) ==> Added to player model
