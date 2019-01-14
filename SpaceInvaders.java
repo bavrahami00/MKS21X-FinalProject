@@ -24,9 +24,8 @@ public class SpaceInvaders{
 	}
 
   private static void clearLine(int line, Terminal t, TerminalSize size){
-  t.moveCursor(0,line);
+    t.moveCursor(0,line);
     for(int i = 0; i < size.getColumns(); i++){
-      t.moveCursor(i,line);
       t.putCharacter(' ');
     }
   }
@@ -64,6 +63,8 @@ public class SpaceInvaders{
 		boolean running = true;
     int x = 25;
     int y = 39;
+    boolean mover = true;
+
     User user = new User(1,1,x,y,1);
     ArrayList<Integer> lasers = new ArrayList<Integer>(); //keeps track of laser coordinates in the form of <x1,y1,x2,y2...>
     Barrier shields = new Barrier();
@@ -88,16 +89,7 @@ public class SpaceInvaders{
 
     while(running){
 
-      terminal.moveCursor(x,y);
-      terminal.putCharacter('=');
-      terminal.moveCursor(x-1,y);
-      terminal.putCharacter('=');
-      terminal.moveCursor(x+1,y);
-      terminal.putCharacter('=');
-      terminal.moveCursor(x-2,y);
-      terminal.putCharacter('<');
-      terminal.moveCursor(x+2,y);
-      terminal.putCharacter('>');
+      putString(x-2,y,terminal,"<===>");
       terminal.moveCursor(x,y-1);
       terminal.putCharacter('^');
 
@@ -126,9 +118,7 @@ public class SpaceInvaders{
         }
         if(key.getKind() == Key.Kind.ArrowUp){//shoots laser upward
           lasers.add(user.getXPos());
-          lasers.add(user.getYPos());
-          terminal.moveCursor(user.getXPos(), user.getYPos());
-          terminal.putCharacter('^');
+          lasers.add(user.getYPos()-1);
         }
       }
 
@@ -159,22 +149,57 @@ public class SpaceInvaders{
             lasers.set(i+1,lasers.get(i+1)-1);
           }
         }
-        terminal.moveCursor(user.getXPos(),user.getYPos());
-        terminal.putCharacter('-');
       }
       if (millis/1000 > lastesecond) {
         lastesecond = millis/1000;
-        for (int p = 0; p < enemies.size(); p++) {
-          terminal.moveCursor(enemies.get(p).getXPos(),enemies.get(p).getYPos());
-          terminal.putCharacter(' ');
-          enemies.get(p).setXPos(enemies.get(p).getXPos()+1);
+        if (mover) {
+          boolean isRight = false;
+          for (int p = 0; p < enemies.size(); p++) {
+            terminal.moveCursor(enemies.get(p).getXPos(),enemies.get(p).getYPos());
+            terminal.putCharacter(' ');
+            if (enemies.get(p).getXPos() == 99) {
+              isRight = true;
+            }
+          }
+          if (!isRight) {
+            for (int p = 0; p < enemies.size(); p++) {
+              enemies.get(p).setXPos(enemies.get(p).getXPos()+1);
+            }
+          }
+          else {
+            mover = false;
+            for (int p = 0; p < enemies.size(); p++) {
+              enemies.get(p).setYPos(enemies.get(p).getYPos()+1);
+            }
+          }
+        }
+        else {
+          boolean isLeft = false;
+          for (int p = 0; p < enemies.size(); p++) {
+            terminal.moveCursor(enemies.get(p).getXPos(),enemies.get(p).getYPos());
+            terminal.putCharacter(' ');
+            if (enemies.get(p).getXPos() == 0) {
+              isLeft = true;
+            }
+          }
+          if (!isLeft) {
+            for (int p = 0; p < enemies.size(); p++) {
+              enemies.get(p).setXPos(enemies.get(p).getXPos()-1);
+            }
+          }
+          else {
+            mover = true;
+            for (int p = 0; p < enemies.size(); p++) {
+              enemies.get(p).setYPos(enemies.get(p).getYPos()+1);
+            }
+          }
         }
         for (int p = 0; p < enemies.size(); p++) {
           terminal.moveCursor(enemies.get(p).getXPos(),enemies.get(p).getYPos());
           terminal.putCharacter('E');
         }
       }
-      SpaceInvaders.putString(30,0,terminal,"Time elapsed:"+millis/1000);
+      SpaceInvaders.putString(30,0,terminal,"Time elapsed: "+millis/1000);
     }
   }
 }
