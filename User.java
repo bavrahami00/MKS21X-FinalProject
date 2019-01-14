@@ -7,7 +7,6 @@ public class User extends Being {
   public boolean isDead() {
     return (lives == 0 && getHealth() == 0);
   }
-  public void move() {}
   public void move(int dir) {
     if (dir == 0) {
       setYPos(getYPos()-1);
