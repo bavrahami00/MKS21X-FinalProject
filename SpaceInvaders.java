@@ -126,8 +126,8 @@ public class SpaceInvaders{
 
       long tEnd = System.currentTimeMillis();
       long millis = tEnd - tStart;
-      if (millis/300 > lastSecond) {
-        lastSecond = millis/300;
+      if (millis/150 > lastSecond) {
+        lastSecond = millis/150;
         for (int i = 0; i < lasers.size(); i+=2) {
           terminal.moveCursor(lasers.get(i),lasers.get(i+1));
           terminal.putCharacter(' ');
@@ -150,8 +150,8 @@ public class SpaceInvaders{
         terminal.moveCursor(user.getXPos(),user.getYPos());
         terminal.putCharacter('-');
       }
-      if (millis/2000 > lastesecond) {
-        lastesecond = millis/2000;
+      if (millis/1000 > lastesecond) {
+        lastesecond = millis/1000;
         for (int p = 0; p < enemies.size(); p++) {
           terminal.moveCursor(enemies.get(p).getXPos(),enemies.get(p).getYPos());
           terminal.putCharacter(' ');
