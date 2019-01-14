@@ -27,39 +27,30 @@ public class SpaceInvaders{
   t.moveCursor(0,line);
     for(int i = 0; i < size.getColumns(); i++){
       t.moveCursor(i,line);
-      //t.moveCursor(i,line);
       t.putCharacter(' ');
     }
   }
   public static ArrayList<Enemy> enemyCreation() {
     ArrayList<Enemy> ans = new ArrayList<Enemy>();
-    Enemy e1 = new Enemy(1,1,10,5);
-    ans.add(e1);
-    Enemy e2 = new Enemy(1,1,11,5);
-    ans.add(e2);
-    Enemy e3 = new Enemy(1,1,12,5);
-    ans.add(e3);
-    Enemy e4 = new Enemy(1,1,13,5);
-    ans.add(e4);
-    Enemy e5 = new Enemy(1,1,10,6);
-    ans.add(e5);
-    Enemy e6 = new Enemy(1,1,11,6);
-    ans.add(e6);
-    Enemy e7 = new Enemy(1,1,12,6);
-    ans.add(e7);
-    Enemy e8 = new Enemy(1,1,13,6);
-    ans.add(e8);
-    Enemy e9 = new Enemy(1,1,10,7);
-    ans.add(e9);
-    Enemy e10 = new Enemy(1,1,11,7);
-    ans.add(e10);
-    Enemy e11 = new Enemy(1,1,12,7);
-    ans.add(e11);
-    Enemy e12 = new Enemy(1,1,13,7);
-    ans.add(e12);
+    Enemy e;
+    for (int p = 0; p < 4; p++) {
+      for (int q = 0; q < 4; q++) {
+        for (int m = 5; m < 8; m++) {
+          e = new Enemy(1,1,30*p+q,m);
+          ans.add(e);
+        }
+      }
+    }
     return ans;
   }
-
+  public static int findexOf(ArrayList<Enemy> arr, int xp, int yp) {
+    for (int p = 0; p < arr.size(); p++) {
+      if (arr.get(p).getXPos() == xp && arr.get(p).getYPos() == yp) {
+        return p;
+      }
+    }
+    return -1;
+  }
   public static void main(String[] args){
     //sets up new private terminal that the game is going to run on
     Terminal terminal = TerminalFacade.createTextTerminal();
@@ -89,6 +80,11 @@ public class SpaceInvaders{
         }
       }
     }
+
+    for (int p = 0; p < enemies.size(); p++) {
+      terminal.moveCursor(enemies.get(p).getXPos(),enemies.get(p).getYPos());
+      terminal.putCharacter('E');
+   }
 
     while(running){
 
@@ -136,11 +132,15 @@ public class SpaceInvaders{
         for (int i = 0; i < lasers.size(); i+=2) {
           terminal.moveCursor(lasers.get(i),lasers.get(i+1));
           terminal.putCharacter(' ');
-          if (lasers.get(i+1) == 1 || shields.barrierExists(lasers.get(i),lasers.get(i+1))) {
+          int index = SpaceInvaders.findexOf(enemies,lasers.get(i),lasers.get(i+1));
+          if (lasers.get(i+1) == 1 || shields.barrierExists(lasers.get(i),lasers.get(i+1)) || index != -1) {
             shields.destroy(lasers.get(i),lasers.get(i+1));
             lasers.remove(i);
             lasers.remove(i);
             i -= 2;
+            if (index != -1) {
+              enemies.remove(index);
+            }
           }
           else {
             terminal.moveCursor(lasers.get(i),lasers.get(i+1)-1);

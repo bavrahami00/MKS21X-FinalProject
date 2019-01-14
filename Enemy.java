@@ -4,14 +4,13 @@ public class Enemy extends Being {
     super(h,a,x,y);
   }
   public boolean isOnEdge(ArrayList<Enemy> all) {
-    for (int x = 0; x < all.size(); x++) {
-      if (getXPos() + 1 == all.get(x).getXPos() && getYPos() + 1 == all.get(x).getYPos()) {
-        return false;
-      }
-    }
-    return true;
+    Enemy e = new Enemy(1,1,getXPos(),getYPos()+1);
+    return !all.contains(e);
   }
   public boolean isDead() {
     return (getHealth() == 0);
+  }
+  public boolean equals(Enemy e) {
+    return getXPos() == e.getXPos() && getYPos() == e.getYPos();
   }
 }
