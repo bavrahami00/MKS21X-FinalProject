@@ -37,5 +37,4 @@ public abstract class Being implements HasLocation{
   public void attacked(Being l) {
     health -= l.getAttack();
   }
-  public abstract void move();
 }

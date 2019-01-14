@@ -24,104 +24,106 @@ public class SpaceInvaders{
 	}
 
   private static void clearLine(int line, Terminal t, TerminalSize size){
-    t.moveCursor(0,line);
+  t.moveCursor(0,line);
     for(int i = 0; i < size.getColumns(); i++){
+      t.moveCursor(i,line);
       t.putCharacter(' ');
     }
   }
-
-
+  public static ArrayList<Enemy> enemyCreation() {
+    ArrayList<Enemy> ans = new ArrayList<Enemy>();
+    Enemy e;
+    for (int p = 0; p < 4; p++) {
+      for (int q = 0; q < 4; q++) {
+        for (int m = 5; m < 8; m++) {
+          e = new Enemy(1,1,30*p+q,m);
+          ans.add(e);
+        }
+      }
+    }
+    return ans;
+  }
+  public static int findexOf(ArrayList<Enemy> arr, int xp, int yp) {
+    for (int p = 0; p < arr.size(); p++) {
+      if (arr.get(p).getXPos() == xp && arr.get(p).getYPos() == yp) {
+        return p;
+      }
+    }
+    return -1;
+  }
   public static void main(String[] args){
-
+    //sets up new private terminal that the game is going to run on
     Terminal terminal = TerminalFacade.createTextTerminal();
 		terminal.enterPrivateMode();
-
 		TerminalSize size = terminal.getTerminalSize();
 		terminal.setCursorVisible(false);
-
+    //timekeeping: Laser and enemy movement is dependent on this
     long tStart = System.currentTimeMillis();
 		long lastSecond = 0;
+
+    //other variables (change later)
+		boolean running = true;
+    int x = 25;
+    int y = 39;
+    User user = new User(1,1,x,y,1);
+    ArrayList<Integer> lasers = new ArrayList<Integer>(); //keeps track of laser coordinates in the form of <x1,y1,x2,y2...>
+    Barrier shields = new Barrier();
+    ArrayList<Enemy> enemies = SpaceInvaders.enemyCreation();
+
     putString(0,0,terminal,"Press [esc] to exit");
 
-		boolean running = true;
+  for(int p = 0; p < 40; p++){
+      for(int w = 0; w < 100; w++){
+        if(shields.barrierExists(w,p)){
+          terminal.moveCursor(w,p);
+          terminal.putCharacter('#');
+        }
+      }
+    }
 
-    int x = 0;
-    int y = 40;
-    User user = new User(1,1,x,y,1);
-    ArrayList<Integer> lasers = new ArrayList<Integer>();
-
-    int playerx = 0;
-    int playery = 40;
+    for (int p = 0; p < enemies.size(); p++) {
+      terminal.moveCursor(enemies.get(p).getXPos(),enemies.get(p).getYPos());
+      terminal.putCharacter('E');
+   }
 
     while(running){
 
-      for(int p = 30; y < 34; y++){
-      for(int i = 0; i < size.getColumns();i++){
-        if((i >= 5 && i <= 15) || (i >= 30 && i <= 40) || (i >= 55 && i <= 65) || (i >= 80 & i <= 90)){
-        terminal.moveCursor(i,y);
-        terminal.putCharacter('#');
-      }}}
-
-      terminal.moveCursor(playerx, playery);
-      terminal.putCharacter('<');
-      terminal.moveCursor(playerx + 1, playery);
-      terminal.putCharacter('=');
-      terminal.moveCursor(playerx + 2, playery);
-      terminal.putCharacter('=');
-      terminal.moveCursor(playerx + 3, playery);
-      terminal.putCharacter('=');
-      terminal.moveCursor(playerx + 4, playery);
-      terminal.putCharacter('=');
-      terminal.moveCursor(playerx + 5, playery);
-      terminal.putCharacter('=');
-      terminal.moveCursor(playerx + 6, playery);
-      terminal.putCharacter('>');
-      terminal.moveCursor(playerx + 3, playery - 2);
-      terminal.putCharacter('^');
-
-
+      //key input reading and what to do on keypress (player movement/shooting)
       Key key = terminal.readInput();
-
       if (key != null) {
-        if (key.getKind() == Key.Kind.Escape) {
+        if (key.getKind() == Key.Kind.Escape) {//closes program
           terminal.exitPrivateMode();
           System.exit(0);
         }
-        if(key.getKind() == Key.Kind.ArrowRight){
-          terminal.moveCursor(user.getXPos(),user.getYPos());
-          terminal.putCharacter(' ');
-          user.move(1);
-          terminal.moveCursor(user.getXPos(),user.getYPos());
-          terminal.putCharacter('-');
-          x++;
+        if(key.getKind() == Key.Kind.ArrowRight){//moves right
+          if (x <= 98) {
+            terminal.moveCursor(user.getXPos(),user.getYPos());
+            terminal.putCharacter(' ');
+            user.move(1);
+            terminal.moveCursor(user.getXPos(),user.getYPos());
+            terminal.putCharacter('-');
+            x++;
+          }
         }
-        if(key.getKind() == Key.Kind.ArrowLeft){
-          terminal.moveCursor(user.getXPos(),user.getYPos());
-          terminal.putCharacter(' ');
-          user.move(3);
-          terminal.moveCursor(user.getXPos(),user.getYPos());
-          terminal.putCharacter('-');
+        if(key.getKind() == Key.Kind.ArrowLeft){//moves left
           if (x >= 1) {
+            terminal.moveCursor(user.getXPos(),user.getYPos());
+            terminal.putCharacter(' ');
+            user.move(3);
+            terminal.moveCursor(user.getXPos(),user.getYPos());
+            terminal.putCharacter('-');
             x--;
           }
         }
-        if(key.getKind() == Key.Kind.ArrowUp){
+        if(key.getKind() == Key.Kind.ArrowUp){//shoots laser upward
           lasers.add(user.getXPos());
           lasers.add(user.getYPos());
           terminal.moveCursor(user.getXPos(), user.getYPos());
           terminal.putCharacter('^');
         }
       }
-      terminal.moveCursor(playerx,playery);
-      clearLine(40,terminal,size);
-      clearLine(playery - 2,terminal,size);
 
-      terminal.moveCursor(playerx,playery);
-      clearLine(40,terminal,size);
-      clearLine(playery - 2,terminal,size);
-      if(playerx > 0){
-        playerx--;
-      }
+
 
       long tEnd = System.currentTimeMillis();
       long millis = tEnd - tStart;
@@ -130,10 +132,15 @@ public class SpaceInvaders{
         for (int i = 0; i < lasers.size(); i+=2) {
           terminal.moveCursor(lasers.get(i),lasers.get(i+1));
           terminal.putCharacter(' ');
-          if (lasers.get(i+1) == 1) {
+          int index = SpaceInvaders.findexOf(enemies,lasers.get(i),lasers.get(i+1));
+          if (lasers.get(i+1) == 1 || shields.barrierExists(lasers.get(i),lasers.get(i+1)) || index != -1) {
+            shields.destroy(lasers.get(i),lasers.get(i+1));
             lasers.remove(i);
             lasers.remove(i);
             i -= 2;
+            if (index != -1) {
+              enemies.remove(index);
+            }
           }
           else {
             terminal.moveCursor(lasers.get(i),lasers.get(i+1)-1);
