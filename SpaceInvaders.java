@@ -64,6 +64,7 @@ public class SpaceInvaders{
     int x = 25;
     int y = 39;
     boolean mover = true;
+    Random r = new Random();
 
     User user = new User(1,1,x,y,1);
     ArrayList<Integer> lasers = new ArrayList<Integer>(); //keeps track of laser coordinates in the form of <x1,y1,x2,y2...>
@@ -128,6 +129,14 @@ public class SpaceInvaders{
       long millis = tEnd - tStart;
       if (millis/150 > lastSecond) {
         lastSecond = millis/150;
+        for (int p = 0; p < enemies.size(); p++) {
+          if (enemies.get(p).isOnEdge(enemies)) {
+            if (r.nextInt() % 25 == 0) {
+              terminal.moveCursor(enemies.get(p).getXPos(),enemies.get(p).getYPos()+1);
+              terminal.putCharacter('v');
+            }
+          }
+        }
         for (int i = 0; i < lasers.size(); i+=2) {
           terminal.moveCursor(lasers.get(i),lasers.get(i+1));
           terminal.putCharacter(' ');
