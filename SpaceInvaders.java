@@ -32,8 +32,8 @@ public class SpaceInvaders{
   public static ArrayList<Enemy> enemyCreation() {
     ArrayList<Enemy> ans = new ArrayList<Enemy>();
     Enemy e;
-    for (int p = 45; p < 56; p++) {
-      for (int m = 5; m < 8; m++) {
+    for (int p = 25; p <= 75; p+=2) {
+      for (int m = 5; m < 11; m+=2) {
         e = new Enemy(1,1,p,m);
         ans.add(e);
       }
@@ -81,7 +81,7 @@ public class SpaceInvaders{
         }
       }
     }
-
+    //draws enemies
     for (int p = 0; p < enemies.size(); p++) {
       terminal.moveCursor(enemies.get(p).getXPos(),enemies.get(p).getYPos());
       terminal.putCharacter('E');
@@ -101,7 +101,7 @@ public class SpaceInvaders{
           System.exit(0);
         }
         if(key.getKind() == Key.Kind.ArrowRight){//moves right
-          if (x <= 98) {
+          if (x <= 96) {
             clearLine(38,terminal,size);
             clearLine(39,terminal,size);
             user.move(1);
@@ -109,7 +109,7 @@ public class SpaceInvaders{
           }
         }
         if(key.getKind() == Key.Kind.ArrowLeft){//moves left
-          if (x >= 1) {
+          if (x >= 3) {
             clearLine(38,terminal,size);
             clearLine(39,terminal,size);
             user.move(3);
@@ -194,6 +194,7 @@ public class SpaceInvaders{
             }
           }
         }
+        //draws enemies after move
         for (int p = 0; p < enemies.size(); p++) {
           terminal.moveCursor(enemies.get(p).getXPos(),enemies.get(p).getYPos());
           terminal.putCharacter('E');
