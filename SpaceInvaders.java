@@ -101,7 +101,7 @@ public class SpaceInvaders{
           System.exit(0);
         }
         if(key.getKind() == Key.Kind.ArrowRight){//moves right
-          if (x <= 98) {
+          if (x <= 96) {
             clearLine(38,terminal,size);
             clearLine(39,terminal,size);
             user.move(1);
@@ -109,7 +109,7 @@ public class SpaceInvaders{
           }
         }
         if(key.getKind() == Key.Kind.ArrowLeft){//moves left
-          if (x >= 1) {
+          if (x >= 3) {
             clearLine(38,terminal,size);
             clearLine(39,terminal,size);
             user.move(3);
