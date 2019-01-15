@@ -19,3 +19,5 @@ terminal
 -Benjamin (1/13) ==> Fixed barrier issues, made enemies
 
 -Derek(1/14) ==> Added to player model
+
+-Derek(1/15) ==> Adjusted enemy spacing
