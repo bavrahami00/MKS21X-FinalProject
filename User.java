@@ -27,7 +27,7 @@ public class User extends Being {
     lives--;
   }
 
-  public void getLife(){
+  public void addLife(){
     lives++;
   }
 }
