@@ -23,7 +23,11 @@ public class User extends Being {
     return lives;
   }
 
-  public void loselife(){
+  public void loseLife(){
     lives--;
+  }
+
+  public void getLife(){
+    lives++;
   }
 }
