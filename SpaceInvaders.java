@@ -15,7 +15,7 @@ import com.googlecode.lanterna.input.KeyMappingProfile;
 
 public class SpaceInvaders{
 
-//from terminal demo
+  //from terminal demo
   public static void putString(int r, int c,Terminal t, String s){
 		t.moveCursor(r,c);
 		for(int i = 0; i < s.length();i++){
@@ -29,6 +29,7 @@ public class SpaceInvaders{
       t.putCharacter(' ');
     }
   }
+
   public static ArrayList<Enemy> enemyCreation() {
     ArrayList<Enemy> ans = new ArrayList<Enemy>();
     Enemy e;
@@ -40,6 +41,7 @@ public class SpaceInvaders{
     }
     return ans;
   }
+
   public static int findexOf(ArrayList<Enemy> arr, int xp, int yp) {
     for (int p = 0; p < arr.size(); p++) {
       if (arr.get(p).getXPos() == xp && arr.get(p).getYPos() == yp) {
@@ -48,6 +50,8 @@ public class SpaceInvaders{
     }
     return -1;
   }
+
+
   public static void main(String[] args){
     //sets up new private terminal that the game is going to run on
     Terminal terminal = TerminalFacade.createTextTerminal();
@@ -65,7 +69,7 @@ public class SpaceInvaders{
     int y = 39;//y-coordinate of middle "="
     boolean mover = true;
     Random r = new Random();
-    boolean toggleInvincible = false;
+    boolean toggleInvincible = false;//cheat code ;)
     int score = 0;
     int level = 1;
 
@@ -78,201 +82,200 @@ public class SpaceInvaders{
     putString(0,0,terminal,"Press [esc] to exit");
 
   //creates barriers
-  for(int p = 0; p < 40; p++){
-      for(int w = 0; w < 100; w++){
-        if(shields.barrierExists(w,p)){
-          terminal.moveCursor(w,p);
-          terminal.putCharacter('#');
+      for(int p = 0; p < 40; p++){
+        for(int w = 0; w < 100; w++){
+          if(shields.barrierExists(w,p)){
+            terminal.moveCursor(w,p);
+            terminal.putCharacter('#');
+          }
         }
       }
-    }
 
     //draws enemies
-    for (int p = 0; p < enemies.size(); p++) {
-      terminal.moveCursor(enemies.get(p).getXPos(),enemies.get(p).getYPos());
-      terminal.putCharacter('E');
-   }
+      for (int p = 0; p < enemies.size(); p++) {
+        terminal.moveCursor(enemies.get(p).getXPos(),enemies.get(p).getYPos());
+        terminal.putCharacter('E');
+      }
 
-    while(running){
+      while(running){
 
-      putString(x-2,y,terminal,"<===>");
-      terminal.moveCursor(x,y-1);
-      terminal.putCharacter('^');
+        putString(x-2,y,terminal,"<===>");
+        terminal.moveCursor(x,y-1);
+        terminal.putCharacter('^');
 
       //key input reading and what to do on keypress (player movement/shooting)
-      Key key = terminal.readInput();
+        Key key = terminal.readInput();
 
-      if (key != null) {
-        if (key.getKind() == Key.Kind.Escape) {//closes program
-          terminal.exitPrivateMode();
-          System.exit(0);
-        }
-        if(key.getKind() == Key.Kind.ArrowRight){//moves right
-          if (x <= 96) {
-            clearLine(38,terminal,size);
-            clearLine(39,terminal,size);
-            user.move(1);
-            x++;
+        if (key != null) {
+          if (key.getKind() == Key.Kind.Escape) {//closes program
+            terminal.exitPrivateMode();
+            System.exit(0);
+          }
+          if(key.getKind() == Key.Kind.ArrowRight){//moves right
+            if (x <= 96) {
+              clearLine(38,terminal,size);
+              clearLine(39,terminal,size);
+              user.move(1);
+              x++;
+            }
+          }
+          if(key.getKind() == Key.Kind.ArrowLeft){//moves left
+            if (x >= 3) {
+              clearLine(38,terminal,size);
+              clearLine(39,terminal,size);
+              user.move(3);
+              x--;
+            }
+          }
+          if(key.getKind() == Key.Kind.ArrowUp){//shoots laser upward
+            lasers.add(user.getXPos());
+            lasers.add(user.getYPos()-1);
+          }
+          if(key.getKind() == Key.Kind.F1){
+            toggleInvincible = true;
+          }
+          if(key.getKind() == Key.Kind.PageUp){
+            user.addLife();
+          }
+          if(key.getKind() == Key.Kind.PageDown){
+            user.loseLife();
           }
         }
-        if(key.getKind() == Key.Kind.ArrowLeft){//moves left
-          if (x >= 3) {
-            clearLine(38,terminal,size);
-            clearLine(39,terminal,size);
-            user.move(3);
-            x--;
-          }
-        }
-        if(key.getKind() == Key.Kind.ArrowUp){//shoots laser upward
-          lasers.add(user.getXPos());
-          lasers.add(user.getYPos()-1);
-        }
-        if(key.getKind() == Key.Kind.F1){
-          toggleInvincible = true;
-        }
-        if(key.getKind() == Key.Kind.PageUp){
-          user.addLife();
-        }
-        if(key.getKind() == Key.Kind.PageDown){
-          user.loseLife();
-        }
-      }
 
 
 
-      long tEnd = System.currentTimeMillis();
-      long millis = tEnd - tStart;
+        long tEnd = System.currentTimeMillis();
+        long millis = tEnd - tStart;
 
       //ENEMY SHOOTING CODE
-      if (millis/150 > lastSecond) {
-        lastSecond = millis/150;
-        for (int p = 0; p < enemies.size(); p++) {
-          if (enemies.get(p).isOnEdge(enemies)) {
-            if (r.nextInt() % (200-(level - 1)) == 0) {
-              terminal.moveCursor(enemies.get(p).getXPos(),enemies.get(p).getYPos()+1);
-              enemyLasers.add(enemies.get(p).getXPos());
-              enemyLasers.add(enemies.get(p).getYPos());
+        if (millis/150 > lastSecond) {
+          lastSecond = millis/150;
+          for (int p = 0; p < enemies.size(); p++) {
+            if (enemies.get(p).isOnEdge(enemies)) {
+              if (r.nextInt() % (200-(level - 1)) == 0) {
+                terminal.moveCursor(enemies.get(p).getXPos(),enemies.get(p).getYPos()+1);
+                enemyLasers.add(enemies.get(p).getXPos());
+                enemyLasers.add(enemies.get(p).getYPos());
+              }
             }
           }
-        }
 
         //ENEMY LASER INTERACTIONS
-        for (int i = 0; i < enemyLasers.size(); i+=2) {
-          terminal.moveCursor(enemyLasers.get(i),enemyLasers.get(i+1));
-          terminal.putCharacter(' ');
+          for (int i = 0; i < enemyLasers.size(); i+=2) {
+            terminal.moveCursor(enemyLasers.get(i),enemyLasers.get(i+1));
+            terminal.putCharacter(' ');
 
           //checks if laser is at top or touches barrier (destroys laser if true)
-          if (enemyLasers.get(i+1) >= 39 || shields.barrierExists(enemyLasers.get(i),enemyLasers.get(i+1))) {
-            shields.destroy(enemyLasers.get(i),enemyLasers.get(i+1));
-            enemyLasers.remove(i);
-            enemyLasers.remove(i);
-            i -= 2;
+            if (enemyLasers.get(i+1) >= 39 || shields.barrierExists(enemyLasers.get(i),enemyLasers.get(i+1))) {
+              shields.destroy(enemyLasers.get(i),enemyLasers.get(i+1));
+              enemyLasers.remove(i);
+              enemyLasers.remove(i);
+              i -= 2;
+            }
+            else if((enemyLasers.get(i) > x-3 && enemyLasers.get(i) < x+3) && enemyLasers.get(i+1) == y -1 && toggleInvincible == false){
+              user.loseLife();
+              enemyLasers.remove(i);
+              enemyLasers.remove(i);
+              i -= 2;
+            }
+            else { //moves laser up
+              terminal.moveCursor(enemyLasers.get(i),enemyLasers.get(i+1)+1);
+              terminal.putCharacter('v');
+              enemyLasers.set(i+1,enemyLasers.get(i+1)+1);
+            }
           }
-          else if((enemyLasers.get(i) > x-3 && enemyLasers.get(i) < x+3) && enemyLasers.get(i+1) == y -1 && toggleInvincible == false){
-            user.loseLife();
-            enemyLasers.remove(i);
-            enemyLasers.remove(i);
-            i -= 2;
-          }
-          else { //moves laser up
-            terminal.moveCursor(enemyLasers.get(i),enemyLasers.get(i+1)+1);
-            terminal.putCharacter('v');
-            enemyLasers.set(i+1,enemyLasers.get(i+1)+1);
-          }
-        }
 
         //LASER INTERACTIONS
-        for (int i = 0; i < lasers.size(); i+=2) {
-          terminal.moveCursor(lasers.get(i),lasers.get(i+1));
-          terminal.putCharacter(' ');
-          int index = SpaceInvaders.findexOf(enemies,lasers.get(i),lasers.get(i+1));
+          for (int i = 0; i < lasers.size(); i+=2) {
+            terminal.moveCursor(lasers.get(i),lasers.get(i+1));
+            terminal.putCharacter(' ');
+            int index = SpaceInvaders.findexOf(enemies,lasers.get(i),lasers.get(i+1));
 
           //checks if laser is at top or touches barrier (destroys laser if true)
-          if (lasers.get(i+1) == 1 || shields.barrierExists(lasers.get(i),lasers.get(i+1)) || index != -1) {
-            shields.destroy(lasers.get(i),lasers.get(i+1));
-            lasers.remove(i);
-            lasers.remove(i);
-            i -= 2;
-            if (index != -1) {
-              enemies.remove(index);
-              score+=20;
+            if (lasers.get(i+1) == 1 || shields.barrierExists(lasers.get(i),lasers.get(i+1)) || index != -1) {
+              shields.destroy(lasers.get(i),lasers.get(i+1));
+              lasers.remove(i);
+              lasers.remove(i);
+              i -= 2;
+              if (index != -1) {
+                enemies.remove(index);
+                score+=20;
+              }
+          }
+            else { //moves laser up
+              terminal.moveCursor(lasers.get(i),lasers.get(i+1)-1);
+              terminal.putCharacter('^');
+              lasers.set(i+1,lasers.get(i+1)-1);
             }
           }
-          else { //moves laser up
-            terminal.moveCursor(lasers.get(i),lasers.get(i+1)-1);
-            terminal.putCharacter('^');
-            lasers.set(i+1,lasers.get(i+1)-1);
-          }
         }
-      }
 
       //ENEMY MOVEMENT
-      if (millis/1000 > lastesecond) {
-        lastesecond = millis/1000;
-        if (mover) {
-          boolean isRight = false;
-          for (int p = 0; p < enemies.size(); p++) {
-            terminal.moveCursor(enemies.get(p).getXPos(),enemies.get(p).getYPos());
-            terminal.putCharacter(' ');
-            if (enemies.get(p).getXPos() == 99) {
-              isRight = true;
-            }
-          }
-          if (!isRight) {
+        if (millis/1000 > lastesecond) {
+          lastesecond = millis/1000;
+          if (mover) {
+            boolean isRight = false;
             for (int p = 0; p < enemies.size(); p++) {
-              enemies.get(p).setXPos(enemies.get(p).getXPos()+1);
+              terminal.moveCursor(enemies.get(p).getXPos(),enemies.get(p).getYPos());
+              terminal.putCharacter(' ');
+              if (enemies.get(p).getXPos() == 99) {
+                isRight = true;
+              }
+            }
+            if (!isRight) {
+              for (int p = 0; p < enemies.size(); p++) {
+                enemies.get(p).setXPos(enemies.get(p).getXPos()+1);
+              }
+            }
+            else {
+              mover = false;
+              for (int p = 0; p < enemies.size(); p++) {
+                enemies.get(p).setYPos(enemies.get(p).getYPos()+1);
+              }
             }
           }
           else {
-            mover = false;
+            boolean isLeft = false;
             for (int p = 0; p < enemies.size(); p++) {
-              enemies.get(p).setYPos(enemies.get(p).getYPos()+1);
+              terminal.moveCursor(enemies.get(p).getXPos(),enemies.get(p).getYPos());
+              terminal.putCharacter(' ');
+              if (enemies.get(p).getXPos() == 0) {
+                isLeft = true;
+              }
+            }
+            if (!isLeft) {
+              for (int p = 0; p < enemies.size(); p++) {
+                enemies.get(p).setXPos(enemies.get(p).getXPos()-1);
+              }
+            }
+            else {
+              mover = true;
+              for (int p = 0; p < enemies.size(); p++) {
+                enemies.get(p).setYPos(enemies.get(p).getYPos()+1);
+              }
             }
           }
-        }
-        else {
-          boolean isLeft = false;
-          for (int p = 0; p < enemies.size(); p++) {
-            terminal.moveCursor(enemies.get(p).getXPos(),enemies.get(p).getYPos());
-            terminal.putCharacter(' ');
-            if (enemies.get(p).getXPos() == 0) {
-              isLeft = true;
-            }
-          }
-          if (!isLeft) {
-            for (int p = 0; p < enemies.size(); p++) {
-              enemies.get(p).setXPos(enemies.get(p).getXPos()-1);
-            }
-          }
-          else {
-            mover = true;
-            for (int p = 0; p < enemies.size(); p++) {
-              enemies.get(p).setYPos(enemies.get(p).getYPos()+1);
-            }
-          }
-        }
 
         //draws enemies after move
-        for (int p = 0; p < enemies.size(); p++) {
-          terminal.moveCursor(enemies.get(p).getXPos(),enemies.get(p).getYPos());
-          terminal.putCharacter('E');
+          for (int p = 0; p < enemies.size(); p++) {
+            terminal.moveCursor(enemies.get(p).getXPos(),enemies.get(p).getYPos());
+            terminal.putCharacter('E');
+          }
         }
-      }
 
       //stuff that goes at the top
-      SpaceInvaders.putString(0,1,terminal,"Time elapsed: "+millis/1000);
-      SpaceInvaders.putString(0,2,terminal,"Lives: "+ user.getLives());
-      SpaceInvaders.putString(0,3,terminal,"Level: "+level);
-      SpaceInvaders.putString(0,4,terminal,"Score: "+ score);
+        SpaceInvaders.putString(0,1,terminal,"Time elapsed: "+millis/1000);
+        SpaceInvaders.putString(0,2,terminal,"Lives: "+ user.getLives());
+        SpaceInvaders.putString(0,3,terminal,"Level: "+level);
+        SpaceInvaders.putString(0,4,terminal,"Score: "+ score);
 
-      if(user.getLives() == 0){
-        running = false;
-        for(int i = 0; i < 40; i++){
-          clearLine(i,terminal,size);
+        if(user.getLives() == 0){
+          running = false;
+          for(int i = 0; i < 40; i++){
+            clearLine(i,terminal,size);
+          }
+          SpaceInvaders.putString(30,0,terminal,"You lost!");
         }
-        SpaceInvaders.putString(30,0,terminal,"You lost!");
       }
-
     }
-  }
 }
