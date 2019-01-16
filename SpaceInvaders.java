@@ -132,7 +132,7 @@ public class SpaceInvaders{
           user.addLife();
         }
         if(key.getKind() == Key.King.PageDown){
-          user.loselife();
+          user.loseLife();
         }
       }
 
@@ -256,6 +256,15 @@ public class SpaceInvaders{
       //stuff that goes at the top
       SpaceInvaders.putString(30,0,terminal,"Time elapsed: "+millis/1000);
       SpaceInvaders.putString(30,1,terminal,"Lives: "+ user.getLives());
+
+      if(user.getLives() == 0){
+        running = false;
+        for(int i = 0; i < 40; i++){
+          clearLine(i,terminal,size);
+        }
+        SpaceInvaders.putString(30,0,terminal,"You lost!");
+      }
+
     }
   }
 }
