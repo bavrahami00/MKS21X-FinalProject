@@ -131,7 +131,7 @@ public class SpaceInvaders{
         if(key.getKind() == Key.Kind.PageUp){
           user.addLife();
         }
-        if(key.getKind() == Key.King.PageDown){
+        if(key.getKind() == Key.Kind.PageDown){
           user.loseLife();
         }
       }
@@ -146,7 +146,7 @@ public class SpaceInvaders{
         lastSecond = millis/150;
         for (int p = 0; p < enemies.size(); p++) {
           if (enemies.get(p).isOnEdge(enemies)) {
-            if (r.nextInt() % 25 == 0) {
+            if (r.nextInt() % 125 == 0) {
               terminal.moveCursor(enemies.get(p).getXPos(),enemies.get(p).getYPos()+1);
               enemyLasers.add(enemies.get(p).getXPos());
               enemyLasers.add(enemies.get(p).getYPos());
@@ -167,7 +167,7 @@ public class SpaceInvaders{
             i -= 2;
           }
           else if((enemyLasers.get(i) > x-3 && enemyLasers.get(i) < x+3) && enemyLasers.get(i+1) == y && toggleInvincible == false){
-            user.loselife();
+            user.loseLife();
           }
           else { //moves laser up
             terminal.moveCursor(enemyLasers.get(i),enemyLasers.get(i+1)+1);
