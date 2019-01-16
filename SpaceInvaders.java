@@ -128,6 +128,12 @@ public class SpaceInvaders{
         if(key.getKind() == Key.Kind.F1){
           toggleInvincible = true;
         }
+        if(key.getKind() == Key.Kind.PageUp){
+          user.addLife();
+        }
+        if(key.getKind() == Key.King.PageDown){
+          user.loselife();
+        }
       }
 
 
@@ -135,7 +141,7 @@ public class SpaceInvaders{
       long tEnd = System.currentTimeMillis();
       long millis = tEnd - tStart;
 
-
+      //ENEMY SHOOTING CODE
       if (millis/150 > lastSecond) {
         lastSecond = millis/150;
         for (int p = 0; p < enemies.size(); p++) {
@@ -239,12 +245,15 @@ public class SpaceInvaders{
             }
           }
         }
+
         //draws enemies after move
         for (int p = 0; p < enemies.size(); p++) {
           terminal.moveCursor(enemies.get(p).getXPos(),enemies.get(p).getYPos());
           terminal.putCharacter('E');
         }
       }
+
+      //stuff that goes at the top
       SpaceInvaders.putString(30,0,terminal,"Time elapsed: "+millis/1000);
       SpaceInvaders.putString(30,1,terminal,"Lives: "+ user.getLives());
     }
