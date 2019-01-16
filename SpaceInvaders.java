@@ -170,9 +170,9 @@ public class SpaceInvaders{
             user.loselife();
           }
           else { //moves laser up
-            terminal.moveCursor(enemyLasers.get(i),enemyLasers.get(i+1)-1);
+            terminal.moveCursor(enemyLasers.get(i),enemyLasers.get(i+1)+1);
             terminal.putCharacter('v');
-            enemyLasers.set(i+1,enemyLasers.get(i+1)-1);
+            enemyLasers.set(i+1,enemyLasers.get(i+1)+1);
           }
         }
 
