@@ -69,7 +69,7 @@ public class SpaceInvaders{
     Random r = new Random();
     boolean toggleInvincible = false;
 
-    User user = new User(1,1,x,y,1);
+    User user = new User(1,1,x,y,3);
     ArrayList<Integer> lasers = new ArrayList<Integer>(); //keeps track of laser coordinates in the form of <x1,y1,x2,y2...>
     ArrayList<Integer> enemyLasers = new ArrayList<Integer>(); // same thing but for enemy lasers
     Barrier shields = new Barrier();
@@ -169,8 +169,11 @@ public class SpaceInvaders{
             enemyLasers.remove(i);
             i -= 2;
           }
-          else if((enemyLasers.get(i) > x-3 && enemyLasers.get(i) < x+3) && enemyLasers.get(i+1) == y && toggleInvincible == false){
+          else if((enemyLasers.get(i) > x-3 && enemyLasers.get(i) < x+3) && enemyLasers.get(i+1) == y-1 && toggleInvincible == false){
             user.loseLife();
+            enemyLasers.remove(i);
+            enemyLasers.remove(i);
+            i -= 2;
           }
           else { //moves laser up
             terminal.moveCursor(enemyLasers.get(i),enemyLasers.get(i+1)+1);
@@ -195,7 +198,7 @@ public class SpaceInvaders{
               enemies.remove(index);
             }
           }
-          else { //moves laser up
+          else { //moves laser down
             terminal.moveCursor(lasers.get(i),lasers.get(i+1)-1);
             terminal.putCharacter('^');
             lasers.set(i+1,lasers.get(i+1)-1);
@@ -262,12 +265,16 @@ public class SpaceInvaders{
 
       if(user.getLives() == 0){
         running = false;
-        for(int i = 0; i < 40; i++){
-          clearLine(i,terminal,size);
-        }
-        SpaceInvaders.putString(30,0,terminal,"You lost!");
+        terminal.clearScreen();
       }
 
     }
+    SpaceInvaders.putString(30,15,terminal,"You lost!");
+    millis = 0;
+    long last = System.currentTimeMillis();
+    while (millis - last < 2000) {
+      millis = System.currentTimeMillis();
+    }
+    terminal.exitPrivateMode();
   }
 }
