@@ -68,6 +68,7 @@ public class SpaceInvaders{
 
     User user = new User(1,1,x,y,1);
     ArrayList<Integer> lasers = new ArrayList<Integer>(); //keeps track of laser coordinates in the form of <x1,y1,x2,y2...>
+    ArrayList<Integer> enemyLasers = new ArrayList<Integer>(); // same thing but for enemy lasers
     Barrier shields = new Barrier();
     ArrayList<Enemy> enemies = SpaceInvaders.enemyCreation();
 
@@ -82,6 +83,7 @@ public class SpaceInvaders{
         }
       }
     }
+
     //draws enemies
     for (int p = 0; p < enemies.size(); p++) {
       terminal.moveCursor(enemies.get(p).getXPos(),enemies.get(p).getYPos());
@@ -96,6 +98,7 @@ public class SpaceInvaders{
 
       //key input reading and what to do on keypress (player movement/shooting)
       Key key = terminal.readInput();
+
       if (key != null) {
         if (key.getKind() == Key.Kind.Escape) {//closes program
           terminal.exitPrivateMode();
@@ -127,16 +130,23 @@ public class SpaceInvaders{
 
       long tEnd = System.currentTimeMillis();
       long millis = tEnd - tStart;
+
+
       if (millis/150 > lastSecond) {
         lastSecond = millis/150;
         for (int p = 0; p < enemies.size(); p++) {
           if (enemies.get(p).isOnEdge(enemies)) {
             if (r.nextInt() % 25 == 0) {
               terminal.moveCursor(enemies.get(p).getXPos(),enemies.get(p).getYPos()+1);
-              terminal.putCharacter('v');
+              enemyLasers.add(enemies.get(p).getXPos());
+              enemyLasers.add(enemies.get(p).getYPos());
             }
           }
         }
+
+        //ENEMY LASER INTERACTIONS
+
+        //LASER INTERACTIONS
         for (int i = 0; i < lasers.size(); i+=2) {
           terminal.moveCursor(lasers.get(i),lasers.get(i+1));
           terminal.putCharacter(' ');
@@ -159,6 +169,8 @@ public class SpaceInvaders{
           }
         }
       }
+
+      //ENEMY MOVEMENT
       if (millis/1000 > lastesecond) {
         lastesecond = millis/1000;
         if (mover) {
