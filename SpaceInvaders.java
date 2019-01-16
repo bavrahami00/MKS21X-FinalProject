@@ -67,7 +67,7 @@ public class SpaceInvaders{
     Random r = new Random();
     boolean toggleInvincible = false;
 
-    User user = new User(1,1,x,y,1);
+    User user = new User(1,1,x,y,3);
     ArrayList<Integer> lasers = new ArrayList<Integer>(); //keeps track of laser coordinates in the form of <x1,y1,x2,y2...>
     ArrayList<Integer> enemyLasers = new ArrayList<Integer>(); // same thing but for enemy lasers
     Barrier shields = new Barrier();
@@ -166,8 +166,11 @@ public class SpaceInvaders{
             enemyLasers.remove(i);
             i -= 2;
           }
-          else if((enemyLasers.get(i) > x-3 && enemyLasers.get(i) < x+3) && enemyLasers.get(i+1) == y && toggleInvincible == false){
+          else if((enemyLasers.get(i) > x-3 && enemyLasers.get(i) < x+3) && enemyLasers.get(i+1) == y -1 && toggleInvincible == false){
             user.loseLife();
+            enemyLasers.remove(i);
+            enemyLasers.remove(i);
+            i -= 2;
           }
           else { //moves laser up
             terminal.moveCursor(enemyLasers.get(i),enemyLasers.get(i+1)+1);
