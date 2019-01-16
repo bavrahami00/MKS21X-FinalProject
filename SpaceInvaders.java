@@ -65,6 +65,7 @@ public class SpaceInvaders{
     int y = 39;//y-coordinate of middle "="
     boolean mover = true;
     Random r = new Random();
+    boolean toggleInvincible = false;
 
     User user = new User(1,1,x,y,1);
     ArrayList<Integer> lasers = new ArrayList<Integer>(); //keeps track of laser coordinates in the form of <x1,y1,x2,y2...>
@@ -124,6 +125,9 @@ public class SpaceInvaders{
           lasers.add(user.getXPos());
           lasers.add(user.getYPos()-1);
         }
+        if(key.getKind() == Key.Kind.F1){
+          toggleInvincible = true;
+        }
       }
 
 
@@ -156,7 +160,7 @@ public class SpaceInvaders{
             enemyLasers.remove(i);
             i -= 2;
           }
-          else if((enemyLasers.get(i) > x-3 && enemyLasers.get(i) < x+3) && enemyLasers.get(i+1) == y){
+          else if((enemyLasers.get(i) > x-3 && enemyLasers.get(i) < x+3) && enemyLasers.get(i+1) == y && toggleInvincible == false){
             user.loselife();
           }
           else { //moves laser up
@@ -242,6 +246,7 @@ public class SpaceInvaders{
         }
       }
       SpaceInvaders.putString(30,0,terminal,"Time elapsed: "+millis/1000);
+      SpaceInvaders.putString(30,1,terminal,"Lives: "+ user.getLives());
     }
   }
 }
