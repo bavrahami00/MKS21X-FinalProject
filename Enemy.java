@@ -4,7 +4,7 @@ public class Enemy extends Being {
     super(h,a,x,y);
   }
   public boolean isOnEdge(ArrayList<Enemy> enemies) {
-    Enemy e = new Enemy(1,1,getXPos(),getYPos()+1);
+    Enemy e = new Enemy(1,1,getXPos(),getYPos()+2);
     for (int p = 0; p < enemies.size(); p++) {
       if (enemies.get(p).equals(e)) {
         return false;
