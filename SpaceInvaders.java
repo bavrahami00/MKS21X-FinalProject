@@ -145,6 +145,26 @@ public class SpaceInvaders{
         }
 
         //ENEMY LASER INTERACTIONS
+        for (int i = 0; i < enemyLasers.size(); i+=2) {
+          terminal.moveCursor(enemyLasers.get(i),enemyLasers.get(i+1));
+          terminal.putCharacter(' ');
+
+          //checks if laser is at top or touches barrier (destroys laser if true)
+          if (enemyLasers.get(i+1) == 40 || shields.barrierExists(enemyLasers.get(i),enemyLasers.get(i+1))) {
+            shields.destroy(lasers.get(i),lasers.get(i+1));
+            enemyLasers.remove(i);
+            enemyLasers.remove(i);
+            i -= 2;
+          }
+          else if((enemyLasers.get(i) > x-3 && enemyLasers.get(i) < x+3) && enemyLasers.get(i+1) == y){
+            user.loselife();
+          }
+          else { //moves laser up
+            terminal.moveCursor(enemyLasers.get(i),enemyLasers.get(i+1)-1);
+            terminal.putCharacter('v');
+            enemyLasers.set(i+1,enemyLasers.get(i+1)-1);
+          }
+        }
 
         //LASER INTERACTIONS
         for (int i = 0; i < lasers.size(); i+=2) {
