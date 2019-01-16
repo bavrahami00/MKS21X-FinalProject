@@ -21,3 +21,5 @@ terminal
 -Derek(1/14) ==> Added to player model
 
 -Derek(1/15) ==> Adjusted enemy spacing
+
+-Derek(1/16) ==>Cleaned up look and added features like levels
