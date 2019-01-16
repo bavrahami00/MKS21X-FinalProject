@@ -66,6 +66,7 @@ public class SpaceInvaders{
     boolean mover = true;
     Random r = new Random();
     boolean toggleInvincible = false;
+    int score = 0;
 
     User user = new User(1,1,x,y,3);
     ArrayList<Integer> lasers = new ArrayList<Integer>(); //keeps track of laser coordinates in the form of <x1,y1,x2,y2...>
@@ -146,7 +147,7 @@ public class SpaceInvaders{
         lastSecond = millis/150;
         for (int p = 0; p < enemies.size(); p++) {
           if (enemies.get(p).isOnEdge(enemies)) {
-            if (r.nextInt() % 125 == 0) {
+            if (r.nextInt() % 200 == 0) {
               terminal.moveCursor(enemies.get(p).getXPos(),enemies.get(p).getYPos()+1);
               enemyLasers.add(enemies.get(p).getXPos());
               enemyLasers.add(enemies.get(p).getYPos());
@@ -193,6 +194,7 @@ public class SpaceInvaders{
             i -= 2;
             if (index != -1) {
               enemies.remove(index);
+              score+=20;
             }
           }
           else { //moves laser up
@@ -257,8 +259,9 @@ public class SpaceInvaders{
       }
 
       //stuff that goes at the top
-      SpaceInvaders.putString(30,0,terminal,"Time elapsed: "+millis/1000);
-      SpaceInvaders.putString(30,1,terminal,"Lives: "+ user.getLives());
+      SpaceInvaders.putString(0,1,terminal,"Time elapsed: "+millis/1000);
+      SpaceInvaders.putString(0,2,terminal,"Lives: "+ user.getLives());
+      SpaceInvaders.putString(0,3,terminal,"Score: "+ score);
 
       if(user.getLives() == 0){
         running = false;
