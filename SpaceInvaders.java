@@ -58,6 +58,8 @@ public class SpaceInvaders{
     long tStart = System.currentTimeMillis();
 		long lastSecond = 0;
     long lastesecond = 0;
+    long lastmil = -500;
+    long millis = 0;
 
     //other variables (change later)
 		boolean running = true;
@@ -121,7 +123,8 @@ public class SpaceInvaders{
             x--;
           }
         }
-        if(key.getKind() == Key.Kind.ArrowUp){//shoots laser upward
+        if(key.getKind() == Key.Kind.ArrowUp && millis - lastmil >= 500){//shoots laser upward
+          lastmil = System.currentTimeMillis() - tStart;
           lasers.add(user.getXPos());
           lasers.add(user.getYPos()-1);
         }
@@ -139,7 +142,7 @@ public class SpaceInvaders{
 
 
       long tEnd = System.currentTimeMillis();
-      long millis = tEnd - tStart;
+      millis = tEnd - tStart;
 
       //ENEMY SHOOTING CODE
       if (millis/150 > lastSecond) {
