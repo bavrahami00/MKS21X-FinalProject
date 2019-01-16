@@ -160,7 +160,7 @@ public class SpaceInvaders{
           terminal.putCharacter(' ');
 
           //checks if laser is at top or touches barrier (destroys laser if true)
-          if (enemyLasers.get(i+1) == 40 || shields.barrierExists(enemyLasers.get(i),enemyLasers.get(i+1))) {
+          if (enemyLasers.get(i+1) == 39 || shields.barrierExists(enemyLasers.get(i),enemyLasers.get(i+1))) {
             shields.destroy(lasers.get(i),lasers.get(i+1));
             enemyLasers.remove(i);
             enemyLasers.remove(i);
