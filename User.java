@@ -22,4 +22,8 @@ public class User extends Being {
   public int getLives(){
     return lives;
   }
+
+  public void loselife(){
+    lives--;
+  }
 }
