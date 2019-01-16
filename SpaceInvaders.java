@@ -61,8 +61,8 @@ public class SpaceInvaders{
 
     //other variables (change later)
 		boolean running = true;
-    int x = 25;
-    int y = 39;
+    int x = 25; //x-coordinate of middle "="
+    int y = 39;//y-coordinate of middle "="
     boolean mover = true;
     Random r = new Random();
 
