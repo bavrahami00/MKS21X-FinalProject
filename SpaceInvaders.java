@@ -13,7 +13,7 @@ import com.googlecode.lanterna.input.InputProvider;
 import com.googlecode.lanterna.input.Key;
 import com.googlecode.lanterna.input.KeyMappingProfile;
 
-public class SpaceInvaders{
+public class SpaceInvaders{//
 
   //from terminal demo
   public static void putString(int r, int c,Terminal t, String s){
