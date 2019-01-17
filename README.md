@@ -1,4 +1,8 @@
 # SpaceInvaders
+TO RUN THE PROGRAM:
+  To run the program, enter "javac -cp lanterna.jar:. SpaceInvaders.java"(whithout quotes)
+  Followed by "java -cp lanterna.jar:. SpaceInvaders" (without quotes again)
+
 
 -Derek (1/4) ==> Created SpaceInvaders class that creates an empty terminal when run [more to be added in the future!]
 -Benjamin (1/4) ==> Created outlines of Being/Laser/Enemy/User/Powerup/HasLocation classes/interfaces that have all planned methods within (but may not work)
@@ -23,3 +27,5 @@ terminal
 -Derek(1/15) ==> Adjusted enemy spacing
 
 -Derek(1/16) ==>Cleaned up look and added features like levels
+
+-Derek(1/17) ==>Added more to README(see top) and did more comments
