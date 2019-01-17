@@ -101,8 +101,8 @@ public class SpaceInvaders{
       if (enemies.size() == 0) {
         enemies = SpaceInvaders.enemyCreation();
         SpaceInvaders.enemyDrawing(terminal,enemies);
+        score += 100*level;
         level++;
-        score += 100;
       }
 
       putString(x-2,y,terminal,"<===>");
@@ -159,7 +159,7 @@ public class SpaceInvaders{
         lastSecond = millis/75;
         for (int p = 0; p < enemies.size(); p++) {
           if (enemies.get(p).isOnEdge(enemies)) {
-            if (r.nextInt() % 125 == 0) {
+            if (r.nextInt() % (125/level) == 0) {
               enemyLasers.add(enemies.get(p).getXPos());
               enemyLasers.add(enemies.get(p).getYPos()+1);
             }
@@ -276,12 +276,19 @@ public class SpaceInvaders{
 
       if(user.getLives() == 0){
         running = false;
-        terminal.clearScreen();
       }
-
+      if (level == 10 && enemies.size() == 0) {
+        running = true;
+      }
     }
-    SpaceInvaders.putString(30,15,terminal,"You lost!");
-    SpaceInvaders.putString(30,25,terminal,"Score = "+score);
+    terminal.clearScreen();
+    if (level == 10 && enemies.size() == 0) {
+      SpaceInvaders.putString(30,15,terminal,"You won!");
+    }
+    else {
+      SpaceInvaders.putString(30,15,terminal,"You lost!");
+    }
+    SpaceInvaders.putString(30,20,terminal,"Score = "+score);
     millis = 0;
     long last = System.currentTimeMillis();
     while (millis - last < 2500) {
