@@ -18,6 +18,9 @@ terminal
 
 -Benjamin (1/13) ==> Fixed barrier issues, made enemies
 
--Derek(1/14) ==> Added to player model
+-Derek (1/14) ==> Added to player model
+-Benjamin(1/14) ==> Created limits to movement
 
 -Derek(1/15) ==> Adjusted enemy spacing
+-Benjamin(1/15) ==> Create faster play and end of game scenarios
+
