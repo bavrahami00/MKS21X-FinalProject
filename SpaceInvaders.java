@@ -42,7 +42,7 @@ public class SpaceInvaders{//
     return ans;
   }
 
-  public static int findexOf(ArrayList<Enemy> arr, int xp, int yp) {
+  public static int findIndexOf(ArrayList<Enemy> arr, int xp, int yp) {
     for (int p = 0; p < arr.size(); p++) {
       if (arr.get(p).getXPos() == xp && arr.get(p).getYPos() == yp) {
         return p;
@@ -127,12 +127,19 @@ public class SpaceInvaders{//
               x--;
             }
           }
-          if(key.getKind() == Key.Kind.ArrowUp){//shoots laser upward
+          //Shoots Laser Upwards
+          if(key.getKind() == Key.Kind.ArrowUp){
             lasers.add(user.getXPos());
             lasers.add(user.getYPos()-1);
           }
-          if(key.getKind() == Key.Kind.F1){
-            toggleInvincible = true;
+          //CHEAT CODE
+          if(key.getKind() == Key.Kind.End){
+            if(toggleInvincible == false){
+              toggleInvincible = true;
+            }
+            if(toggleInvincible == true){
+              toggleInvincible = false;
+            }
           }
           if(key.getKind() == Key.Kind.PageUp){
             user.addLife();
@@ -143,7 +150,7 @@ public class SpaceInvaders{//
         }
 
 
-
+        //TIMEKEEPING
         long tEnd = System.currentTimeMillis();
         long millis = tEnd - tStart;
 
@@ -172,8 +179,10 @@ public class SpaceInvaders{//
               enemyLasers.remove(i);
               i -= 2;
             }
-            else if((enemyLasers.get(i) > x-3 && enemyLasers.get(i) < x+3) && enemyLasers.get(i+1) == y -1 && toggleInvincible == false){
-              user.loseLife();
+            else if((enemyLasers.get(i) > x-3 && enemyLasers.get(i) < x+3) && enemyLasers.get(i+1) == y -1){
+              if(toggleInvincible == false){
+                user.loseLife();
+              }
               enemyLasers.remove(i);
               enemyLasers.remove(i);
               i -= 2;
@@ -189,7 +198,7 @@ public class SpaceInvaders{//
           for (int i = 0; i < lasers.size(); i+=2) {
             terminal.moveCursor(lasers.get(i),lasers.get(i+1));
             terminal.putCharacter(' ');
-            int index = SpaceInvaders.findexOf(enemies,lasers.get(i),lasers.get(i+1));
+            int index = SpaceInvaders.findIndexOf(enemies,lasers.get(i),lasers.get(i+1));
 
           //checks if laser is at top or touches barrier (destroys laser if true)
             if (lasers.get(i+1) == 1 || shields.barrierExists(lasers.get(i),lasers.get(i+1)) || index != -1) {
@@ -268,6 +277,7 @@ public class SpaceInvaders{//
         SpaceInvaders.putString(0,2,terminal,"Lives: "+ user.getLives());
         SpaceInvaders.putString(0,3,terminal,"Level: "+level);
         SpaceInvaders.putString(0,4,terminal,"Score: "+ score);
+        SpaceInvaders.putString(0,5,terminal,"Cheats: "+ toggleInvincible);
 
         if(user.getLives() == 0){
           running = false;
