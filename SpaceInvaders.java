@@ -150,9 +150,8 @@ public class SpaceInvaders{
         for (int p = 0; p < enemies.size(); p++) {
           if (enemies.get(p).isOnEdge(enemies)) {
             if (r.nextInt() % 125 == 0) {
-              terminal.moveCursor(enemies.get(p).getXPos(),enemies.get(p).getYPos()+1);
               enemyLasers.add(enemies.get(p).getXPos());
-              enemyLasers.add(enemies.get(p).getYPos());
+              enemyLasers.add(enemies.get(p).getYPos()+1);
             }
           }
         }

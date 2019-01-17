@@ -5,8 +5,9 @@ public class Enemy extends Being {
   }
   public boolean isOnEdge(ArrayList<Enemy> enemies) {
     Enemy e = new Enemy(1,1,getXPos(),getYPos()+2);
+    Enemy f = new Enemy(1,1,getXPos(),getYPos()+4);
     for (int p = 0; p < enemies.size(); p++) {
-      if (enemies.get(p).equals(e)) {
+      if (enemies.get(p).equals(e) || enemies.get(p).equals(f)) {
         return false;
       }
     }
