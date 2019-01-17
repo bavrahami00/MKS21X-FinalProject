@@ -1,17 +1,11 @@
 public class Powerup implements HasLocation {
   private int xPos;
   private int yPos;
-  private int heal;
-  private int addLife;
-  private int addDamage;
-  private int time;
-  private boolean[] effects;
-  public Powerup(int h, int l, int d, int t, boolean[] e) {
-    heal = h;
-    addLife = l;
-    addDamage = d;
-    time = t;
-    effects = e;
+  private String type;
+  public Powerup(int x, int y, String t) {
+    xPos = x;
+    yPos = y;
+    type = t;
   }
   //Extra life, temporary immunity, recreates barriers, rapid fire, increase score
   public int getXPos() {
@@ -21,14 +15,8 @@ public class Powerup implements HasLocation {
     return yPos;
   }
   public void implement(User u) {
-    if (effects[0]) {
-      u.changeHealth(heal);
-    }
-    if (effects[1]) {
-      u.changeLife(addLife);
-    }
-    if (effects[2]) {
-      u.changeDamage(addDamage);
+    if (type.equals("Life")) {
+      u.addLife();
     }
   }
 }
