@@ -13,6 +13,7 @@ public class Powerup implements HasLocation {
     time = t;
     effects = e;
   }
+  //Extra life, temporary immunity, recreates barriers, rapid fire, increase score
   public int getXPos() {
     return xPos;
   }
