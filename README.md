@@ -29,3 +29,5 @@ terminal
 -Derek(1/16) ==>Cleaned up look and added features like levels
 
 -Derek(1/17) ==>Added more to README(see top) and did more comments
+
+-Derek(1/18) ==>Cleaned up/fixed code
