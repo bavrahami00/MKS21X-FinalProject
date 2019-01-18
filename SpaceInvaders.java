@@ -69,7 +69,7 @@ public class SpaceInvaders{//
     int y = 39;//y-coordinate of middle "="
     boolean mover = true;
     Random r = new Random();
-    boolean toggleInvincible = true;//cheat code ;)
+    boolean toggleInvincible = false;//cheat code ;)
     int score = 0;
     int level = 1;
 
@@ -94,7 +94,7 @@ public class SpaceInvaders{//
     //draws enemies
       for (int p = 0; p < enemies.size(); p++) {
         terminal.moveCursor(enemies.get(p).getXPos(),enemies.get(p).getYPos());
-        terminal.putCharacter('E');
+        terminal.putCharacter('\u262c');
       }
 
       while(running){
@@ -269,7 +269,7 @@ public class SpaceInvaders{//
         //draws enemies after move
           for (int p = 0; p < enemies.size(); p++) {
             terminal.moveCursor(enemies.get(p).getXPos(),enemies.get(p).getYPos());
-            terminal.putCharacter('E');
+            terminal.putCharacter('\u262c');
           }
         }
 
