@@ -1,8 +1,8 @@
 public class Powerup implements HasLocation {
   private int xPos;
   private int yPos;
-  private String type;
-  public Powerup(int x, int y, String t) {
+  private int type;
+  public Powerup(int x, int y, int t) {
     xPos = x;
     yPos = y;
     type = t;
@@ -14,17 +14,17 @@ public class Powerup implements HasLocation {
   public int getYPos() {
     return yPos;
   }
-  public int implement(User u,int score,barrier shields,int shootTime) {
-    if (type.equals("Life")) {
+  public int implement(User u, int score, barrier shields, int shootTime) {
+    if (type == 0) {
       u.addLife();
     }
-    else if (type.equals("Score")) {
+    else if (type == 1) {
       score += 150;
     }
-    else if (type.equals("Barrier")) {
+    else if (type == 2) {
       shields = new Barrier();
     }
-    else if (type.equals("Time")) {
+    else if (type == 3) {
       shootTime = 100;
       return 10000;
     }
