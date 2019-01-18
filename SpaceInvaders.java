@@ -73,6 +73,7 @@ public class SpaceInvaders{
     int x = 25; //x-coordinate of middle "="
     int y = 39;//y-coordinate of middle "="
     boolean mover = true;
+    int shootTime = 500;
     Random r = new Random();
     boolean toggleInvincible = false;
     int score = 0;
@@ -133,7 +134,7 @@ public class SpaceInvaders{
             x--;
           }
         }
-        if (key.getKind() == Key.Kind.ArrowUp && millis - lastmil >= 500){//shoots laser upward
+        if (key.getKind() == Key.Kind.ArrowUp && millis - lastmil >= shootTime){//shoots laser upward
           lastmil = System.currentTimeMillis() - tStart;
           lasers.add(user.getXPos());
           lasers.add(user.getYPos()-1);
@@ -159,7 +160,7 @@ public class SpaceInvaders{
         lastSecond = millis/75;
         for (int p = 0; p < enemies.size(); p++) {
           if (enemies.get(p).isOnEdge(enemies)) {
-            if (r.nextInt() % (125/level) == 0) {
+            if (r.nextInt() % (250/level) == 0) {
               enemyLasers.add(enemies.get(p).getXPos());
               enemyLasers.add(enemies.get(p).getYPos()+1);
             }
@@ -236,7 +237,7 @@ public class SpaceInvaders{
           else {
             mover = false;
             for (int p = 0; p < enemies.size(); p++) {
-              enemies.get(p).setYPos(enemies.get(p).getYPos()+1);
+              enemies.get(p).setYPos(enemies.get(p).getYPos()+2);
             }
           }
         }
@@ -257,7 +258,7 @@ public class SpaceInvaders{
           else {
             mover = true;
             for (int p = 0; p < enemies.size(); p++) {
-              enemies.get(p).setYPos(enemies.get(p).getYPos()+1);
+              enemies.get(p).setYPos(enemies.get(p).getYPos()+2);
             }
           }
         }
