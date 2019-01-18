@@ -69,7 +69,7 @@ public class SpaceInvaders{//
     int y = 39;//y-coordinate of middle "="
     boolean mover = true;
     Random r = new Random();
-    boolean toggleInvincible = false;//cheat code ;)
+    boolean toggleInvincible = true;//cheat code ;)
     int score = 0;
     int level = 1;
 
@@ -135,9 +135,10 @@ public class SpaceInvaders{//
           //CHEAT CODE
           if(key.getKind() == Key.Kind.End){
             if(toggleInvincible == false){
+              clearLine(5,terminal,size);
               toggleInvincible = true;
             }
-            if(toggleInvincible == true){
+            else if(toggleInvincible == true){
               toggleInvincible = false;
             }
           }
