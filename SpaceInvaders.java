@@ -56,7 +56,7 @@ public class SpaceInvaders{
     return -1;
   }
   public static void barrierCreation(Terminal t, Barrier shields) {
-    for(int p = 0; p < 40; p++){
+    for(int p = 30; p < 35; p++){
       for(int w = 0; w < 100; w++){
         if(shields.barrierExists(w,p)){
           t.moveCursor(w,p);
@@ -163,7 +163,7 @@ public class SpaceInvaders{
       if (millis / 70 > powerTime) {
         powerTime = millis / 70;
         if (power == -1) {
-          if (r.nextInt(1000) < 5) {
+          if (r.nextInt(100) < 5) {
             o = new Powerup(99,1,r.nextInt()%5);
             power = 99;
             terminal.moveCursor(99,1);
@@ -187,6 +187,7 @@ public class SpaceInvaders{
       //ENEMY SHOOTING CODE
       if (millis/75 > lastSecond) {
         lastSecond = millis/75;
+        SpaceInvaders.barrierCreation(terminal,shields);
         for (int p = 0; p < enemies.size(); p++) {
           if (enemies.get(p).isOnEdge(enemies)) {
             if (r.nextInt() % (250/level) == 0) {
@@ -230,7 +231,14 @@ public class SpaceInvaders{
           int index = SpaceInvaders.findexOf(enemies,lasers.get(i),lasers.get(i+1));
 
           //checks if laser is at top or touches barrier (destroys laser if true)
-          if (lasers.get(i+1) == 1 || shields.barrierExists(lasers.get(i),lasers.get(i+1)) || index != -1 || (lasers.get(i+1) == 2 && power == lasers.get(i))) {
+          if (lasers.get(i+1) == 1 || shields.barrierExists(lasers.get(i),lasers.get(i+1)) || index != -1 || ((lasers.get(i+1) == 2 || lasers.get(i+1) == 3 || lasers.get(i+1) == 4) && power == lasers.get(i))) {
+            if (lasers.get(i+1) == 2 || lasers.get(i+1) == 3 || lasers.get(i+1) == 4) {
+              int tim = o.implement(user,score,shields,shootTime);
+              //SpaceInvaders.putString(30,0,terminal,""+tim);
+              terminal.moveCursor(power,1);
+              terminal.putCharacter(' ');
+              power = -1;
+            }
             shields.destroy(lasers.get(i),lasers.get(i+1));
             lasers.remove(i);
             lasers.remove(i);
@@ -239,13 +247,6 @@ public class SpaceInvaders{
               enemies.remove(index);
               score += 10;
             }
-//            if (lasers.get(i+1) == 2) {
-  //            int tim = o.implement(user,score,shields,shootTime);
-    //          SpaceInvaders.putString(30,0,terminal,""+tim);
-      //        terminal.moveCursor(1,power);
-        //      terminal.putCharacter(' ');
-          //    power = -1;
-            //}
           }
           else { //moves laser up
             terminal.moveCursor(lasers.get(i),lasers.get(i+1)-1);
