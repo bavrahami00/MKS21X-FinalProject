@@ -24,3 +24,8 @@ terminal
 -Derek(1/15) ==> Adjusted enemy spacing
 -Benjamin(1/15) ==> Create faster play and end of game scenarios
 
+-Benjamin (1/16) ==> Changed the way the enemy attacked and made only front shoot
+
+-Benjamin (1/17) ==> Started implementing Powerup class
+
+-Benjamin (1/18) ==> Continued putting in Powerup, made it move
