@@ -72,6 +72,7 @@ public class SpaceInvaders{//
     boolean toggleInvincible = false;//cheat code ;)
     int score = 0;
     int level = 1;
+    int menuMode = 0;
 
     User user = new User(1,1,x,y,3);
     ArrayList<Integer> lasers = new ArrayList<Integer>(); //keeps track of laser coordinates in the form of <x1,y1,x2,y2...>
@@ -79,25 +80,16 @@ public class SpaceInvaders{//
     Barrier shields = new Barrier();
     ArrayList<Enemy> enemies = SpaceInvaders.enemyCreation();
 
-    putString(0,0,terminal,"Press [esc] to exit");
+    while(running && menuMode == 0){
+      Key key1 = terminal.readInput();
+      putString(50,20,terminal,"press any key to begin");
 
-  //creates barriers
-      for(int p = 0; p < 40; p++){
-        for(int w = 0; w < 100; w++){
-          if(shields.barrierExists(w,p)){
-            terminal.moveCursor(w,p);
-            terminal.putCharacter('#');
-          }
-        }
+      if(key1 != null){
+        menuMode = 1;
       }
+    }
 
-    //draws enemies
-      for (int p = 0; p < enemies.size(); p++) {
-        terminal.moveCursor(enemies.get(p).getXPos(),enemies.get(p).getYPos());
-        terminal.putCharacter('\u262c');
-      }
-
-      while(running){
+      while(running && menuMode == 1){
 
         putString(x-2,y,terminal,"<===>");
         terminal.moveCursor(x,y-1);
@@ -149,6 +141,25 @@ public class SpaceInvaders{//
             user.loseLife();
           }
         }
+
+        putString(0,0,terminal,"Press [esc] to exit");
+
+      //creates barriers
+          for(int p = 0; p < 40; p++){
+            for(int w = 0; w < 100; w++){
+              if(shields.barrierExists(w,p)){
+                terminal.moveCursor(w,p);
+                terminal.putCharacter('#');
+              }
+            }
+          }
+
+        //draws enemies
+          for (int p = 0; p < enemies.size(); p++) {
+            terminal.moveCursor(enemies.get(p).getXPos(),enemies.get(p).getYPos());
+            terminal.putCharacter('\u262c');
+          }
+
 
 
         //TIMEKEEPING
