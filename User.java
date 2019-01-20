@@ -1,11 +1,11 @@
 public class User extends Being {
   private int lives;
-  public User(int h, int a, int x, int y, int l) {
-    super(h,a,x,y);
+  public User(int x, int y, int l) {
+    super(x,y);
     lives = l;
   }
   public boolean isDead() {
-    return (lives == 0 && getHealth() == 0);
+    return (lives == 0);
   }
   public void move(int dir) {
     if (dir == 1) {//moves right

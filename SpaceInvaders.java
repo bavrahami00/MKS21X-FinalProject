@@ -34,7 +34,7 @@ public class SpaceInvaders{
     Enemy e;
     for (int p = 25; p <= 75; p+=2) {
       for (int m = 5; m < 11; m+=2) {
-        e = new Enemy(1,1,p,m);
+        e = new Enemy(p,m);
         ans.add(e);
       }
     }
@@ -94,7 +94,7 @@ public class SpaceInvaders{
     int power = -1;
     Powerup o = new Powerup(1,1,1);
 
-    User user = new User(1,1,x,y,3);
+    User user = new User(x,y,3);
     ArrayList<Integer> lasers = new ArrayList<Integer>(); //keeps track of laser coordinates in the form of <x1,y1,x2,y2...>
     ArrayList<Integer> enemyLasers = new ArrayList<Integer>(); // same thing but for enemy lasers
     Barrier shields = new Barrier();
