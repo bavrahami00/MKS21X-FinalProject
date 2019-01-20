@@ -13,8 +13,7 @@ import com.googlecode.lanterna.input.InputProvider;
 import com.googlecode.lanterna.input.Key;
 import com.googlecode.lanterna.input.KeyMappingProfile;
 
-public class SpaceInvaders{
-
+public class SpaceInvaders {
 //from terminal demo
   public static void putString(int r, int c,Terminal t, String s){
 		t.moveCursor(r,c);
@@ -75,6 +74,8 @@ public class SpaceInvaders{
     //timekeeping: Laser and enemy movement is dependent on this
     long tStart = System.currentTimeMillis();
 		long lastSecond = 0;
+    int score = 0;
+    int shootTime = 500;
     long lastesecond = 0;
     long lastmil = -500;
     long millis = 0;
@@ -85,11 +86,8 @@ public class SpaceInvaders{
     int x = 25; //x-coordinate of middle "="
     int y = 39;//y-coordinate of middle "="
     boolean mover = true;
-    boolean doesLose = true;
-    int shootTime = 500;
     Random r = new Random();
     boolean toggleInvincible = false;
-    int score = 0;
     int level = 1;
     int power = -1;
     Powerup o = new Powerup(1,1,1);
@@ -163,8 +161,9 @@ public class SpaceInvaders{
       if (millis / 70 > powerTime) {
         powerTime = millis / 70;
         if (power == -1) {
-          if (r.nextInt(100) < 5) {
-            o = new Powerup(99,1,r.nextInt()%5);
+          int n = Math.abs(r.nextInt(500));
+          if (n < 5) {
+            o = new Powerup(99,1,n);
             power = 99;
             terminal.moveCursor(99,1);
             terminal.putCharacter('P');
@@ -203,16 +202,14 @@ public class SpaceInvaders{
           terminal.putCharacter(' ');
 
           //checks if laser is at top or touches barrier (destroys laser if true)
-          if (enemyLasers.get(i+1) >= 39 || shields.barrierExists(enemyLasers.get(i),enemyLasers.get(i+1))) {
+          if (enemyLasers.get(i+1) < 40 && (enemyLasers.get(i+1) == 39 || shields.barrierExists(enemyLasers.get(i),enemyLasers.get(i+1)))) {
             shields.destroy(enemyLasers.get(i),enemyLasers.get(i+1));
             enemyLasers.remove(i);
             enemyLasers.remove(i);
             i -= 2;
           }
           else if((enemyLasers.get(i) > x-3 && enemyLasers.get(i) < x+3) && enemyLasers.get(i+1) == y-1 && toggleInvincible == false){
-            if (doesLose) {
-              user.loseLife();
-            }
+            user.loseLife();
             enemyLasers.remove(i);
             enemyLasers.remove(i);
             i -= 2;
@@ -233,8 +230,26 @@ public class SpaceInvaders{
           //checks if laser is at top or touches barrier (destroys laser if true)
           if (lasers.get(i+1) == 1 || shields.barrierExists(lasers.get(i),lasers.get(i+1)) || index != -1 || ((lasers.get(i+1) == 2 || lasers.get(i+1) == 3 || lasers.get(i+1) == 4) && power == lasers.get(i))) {
             if (lasers.get(i+1) == 2 || lasers.get(i+1) == 3 || lasers.get(i+1) == 4) {
-              int tim = o.implement(user,score,shields,shootTime);
-              //SpaceInvaders.putString(30,0,terminal,""+tim);
+              int n = o.getType();
+              if (n == 0) {
+                user.addLife();
+              }
+              else if (n == 1) {
+                score += 150;
+              }
+              else if (n == 2) {
+                shields = new Barrier();
+              }
+              else if (n == 3) {
+                shootTime = 150;
+                //return 10000;
+              }
+              else {
+                toggleInvincible = true;
+                //return 15000;
+              }
+              //int tim = o.implement(user,score,shields,shootTime);
+              //SpaceInvaders.putString(30,0,terminal,""+o.getType());
               terminal.moveCursor(power,1);
               terminal.putCharacter(' ');
               power = -1;
@@ -276,7 +291,10 @@ public class SpaceInvaders{
           else {
             mover = false;
             for (int p = 0; p < enemies.size(); p++) {
-              enemies.get(p).setYPos(enemies.get(p).getYPos()+6);
+              enemies.get(p).setYPos(enemies.get(p).getYPos()+5);
+              if (enemies.get(p).getYPos() > 39) {
+                running = false;
+              }
             }
           }
         }
@@ -297,7 +315,10 @@ public class SpaceInvaders{
           else {
             mover = true;
             for (int p = 0; p < enemies.size(); p++) {
-              enemies.get(p).setYPos(enemies.get(p).getYPos()+6);
+              enemies.get(p).setYPos(enemies.get(p).getYPos()+5);
+              if (enemies.get(p).getYPos() > 39) {
+                running = false;
+              }
             }
           }
         }

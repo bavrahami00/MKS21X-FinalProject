@@ -18,23 +18,7 @@ public class Powerup implements HasLocation {
     xPos--;
     return xPos;
   }
-  public int implement(User u, int score, Barrier shields, int shootTime) {
-    if (type == 0) {
-      u.addLife();
-    }
-    else if (type == 1) {
-      score += 150;
-    }
-    else if (type == 2) {
-      shields = new Barrier();
-    }
-    else if (type == 3) {
-      shootTime = 100;
-      return 10000;
-    }
-    else {
-      return 15000;
-    }
-    return 0;
+  public int getType() {
+    return type;
   }
 }
