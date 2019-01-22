@@ -46,7 +46,7 @@ public class SpaceInvaders {
     }
   }
 
-  public static int findexOf(ArrayList<Enemy> arr, int xp, int yp) {
+  public static int findIndexOf(ArrayList<Enemy> arr, int xp, int yp) {
     for (int p = 0; p < arr.size(); p++) {
       if (arr.get(p).getXPos() == xp && arr.get(p).getYPos() == yp) {
         return p;
@@ -74,7 +74,7 @@ public class SpaceInvaders {
     //timekeeping: Laser and enemy movement is dependent on this
     long tStart = System.currentTimeMillis();
 		long lastSecond = 0;
-    int score = 0;
+    int score = -1;
     int shootTime = 500;
     long lastesecond = 0;
     long lastmil = -500;
@@ -91,6 +91,19 @@ public class SpaceInvaders {
     int level = 1;
     int power = -1;
     Powerup o = new Powerup(1,1,1);
+    int powerLength = 0;
+    long lastPower = 0;
+    boolean toggleInvinciblePower = false;
+
+    while (score == -1) {
+            Key key1 = terminal.readInput();
+      putString(35,20,terminal,"Press any key to begin");
+
+      if(key1 != null){
+        score = 0;
+        terminal.clearScreen();
+      }
+    }
 
     User user = new User(x,y,3);
     ArrayList<Integer> lasers = new ArrayList<Integer>(); //keeps track of laser coordinates in the form of <x1,y1,x2,y2...>
@@ -103,6 +116,7 @@ public class SpaceInvaders {
     SpaceInvaders.barrierCreation(terminal,shields);
 
     while(running){
+      toggleInvincible = toggleInvincible && toggleInvinciblePower;
       if (enemies.size() == 0) {
         enemies = SpaceInvaders.enemyCreation();
         SpaceInvaders.enemyDrawing(terminal,enemies);
@@ -143,8 +157,8 @@ public class SpaceInvaders {
           lasers.add(user.getXPos());
           lasers.add(user.getYPos()-1);
         }
-        if(key.getKind() == Key.Kind.F1){
-          toggleInvincible = true;
+        if(key.getKind() == Key.Kind.End){
+          toggleInvincible = !toggleInvincible;
         }
         if(key.getKind() == Key.Kind.PageUp){
           user.addLife();
@@ -221,11 +235,17 @@ public class SpaceInvaders {
           }
         }
 
+        if (o.getType() == 3 && millis - lastPower > 10000) {
+          shootTime = 500;
+        }
+        if (o.getType() == 4 && millis - lastPower > 15000) {
+          toggleInvinciblePower = false;
+        }
         //LASER INTERACTIONS
         for (int i = 0; i < lasers.size(); i+=2) {
           terminal.moveCursor(lasers.get(i),lasers.get(i+1));
           terminal.putCharacter(' ');
-          int index = SpaceInvaders.findexOf(enemies,lasers.get(i),lasers.get(i+1));
+          int index = SpaceInvaders.findIndexOf(enemies,lasers.get(i),lasers.get(i+1));
 
           //checks if laser is at top or touches barrier (destroys laser if true)
           if (lasers.get(i+1) == 1 || shields.barrierExists(lasers.get(i),lasers.get(i+1)) || index != -1 || ((lasers.get(i+1) == 2 || lasers.get(i+1) == 3 || lasers.get(i+1) == 4) && power == lasers.get(i))) {
@@ -242,11 +262,11 @@ public class SpaceInvaders {
               }
               else if (n == 3) {
                 shootTime = 150;
-                //return 10000;
+                lastPower = System.currentTimeMillis();
               }
               else {
-                toggleInvincible = true;
-                //return 15000;
+                toggleInvinciblePower = true;
+                lastPower = System.currentTimeMillis();
               }
               //int tim = o.implement(user,score,shields,shootTime);
               //SpaceInvaders.putString(30,0,terminal,""+o.getType());
