@@ -91,6 +91,7 @@ public class SpaceInvaders {
     int level = 1;
     int power = -1;
     Powerup o = new Powerup(1,1,1);
+    int menuMode = 0;
 
     User user = new User(x,y,3);
     ArrayList<Integer> lasers = new ArrayList<Integer>(); //keeps track of laser coordinates in the form of <x1,y1,x2,y2...>
@@ -98,11 +99,21 @@ public class SpaceInvaders {
     Barrier shields = new Barrier();
     ArrayList<Enemy> enemies = SpaceInvaders.enemyCreation();
 
+    while (menuMode == 0) {
+      Key key1 = terminal.readInput();
+      putString(50,20,terminal,"press any key to begin");
+
+      if(key1 != null){
+        menuMode = 1;
+        terminal.clearScreen();
+      }
+    }
+
     putString(0,0,terminal,"Press [esc] to exit");
     SpaceInvaders.enemyDrawing(terminal,enemies);
     SpaceInvaders.barrierCreation(terminal,shields);
 
-    while(running){
+    while (running) {
       if (enemies.size() == 0) {
         enemies = SpaceInvaders.enemyCreation();
         SpaceInvaders.enemyDrawing(terminal,enemies);
@@ -143,8 +154,8 @@ public class SpaceInvaders {
           lasers.add(user.getXPos());
           lasers.add(user.getYPos()-1);
         }
-        if(key.getKind() == Key.Kind.F1){
-          toggleInvincible = true;
+        if(key.getKind() == Key.Kind.End){
+          toggleInvincible = !toggleInvincible;
         }
         if(key.getKind() == Key.Kind.PageUp){
           user.addLife();
