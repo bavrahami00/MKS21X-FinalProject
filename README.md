@@ -29,3 +29,5 @@ terminal
 -Benjamin (1/17) ==> Started implementing Powerup class
 
 -Benjamin (1/18) ==> Continued putting in Powerup, made it move
+
+-Benjamin (1/20) ==> Cleaned up code
