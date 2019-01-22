@@ -2,10 +2,12 @@
 
 TO RUN THE PROGRAM: After cloning, simply type "bash run.sh" into the Terminal
 
+If the program doesn't run, you can run it manually by typing "resize -s 40 100" followed by "javac -cp lanterna.jar:. SpaceInvaders.java" and "java -cp lanterna.jar:. SpaceInvaders"
+
 About the Program:
 
-This is a version of Space Invaders on the terminal. It is much like the original game, with enemies moving across the screen and the player at the bottom with barriers protecting it. 
-Each enemy kill is worth 10 points, displayed on the top left corner and the player has 3 lives, one of which is lost every time an enemy laser hits the player. 
+This is a version of Space Invaders on the terminal. It is much like the original game, with enemies moving across the screen and the player at the bottom with barriers protecting it.
+Each enemy kill is worth 10 points, displayed on the top left corner and the player has 3 lives, one of which is lost every time an enemy laser hits the player.
 When all the enemies are killed, the next level starts and the enemies respawn and the difficulty increases. There are 10 levels in total.
 
 Cheats :') Page Up ==> Add 1 life Page Down ==> Subtract 1 life End ==> Toggle Invincibility
@@ -50,4 +52,3 @@ terminal
 -Derek (1/19) ==> Added run.sh and wrote more in readme
 
 -Benjamin (1/20) ==> Cleaned up code
-
